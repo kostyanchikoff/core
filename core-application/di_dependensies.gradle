@@ -1,0 +1,13 @@
+
+def koin_version = '2.1.4'
+
+dependencies {
+// Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+// Koin Android Scope features
+    implementation "org.koin:koin-android-scope:$koin_version"
+// Koin Android ViewModel features
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+// Koin Android Experimental features
+    implementation "org.koin:koin-android-ext:$koin_version"
+}
