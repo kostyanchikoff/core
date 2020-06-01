@@ -20,8 +20,6 @@ object CoreConstant{
     const val ARG_REDIRECT = "ARG_REDIRECT"
     const val ARG_ANIM = "ARG_ANIM"
 
-
-
-
-
+    const val AUTHORIZATION  = "Authorization"
+    const val GRANT_TYPE_REFRESH_TOKEN = "refresh_token"
 }
