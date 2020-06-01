@@ -1,8 +1,7 @@
 package com.kostyanchikoff.movenpublich
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.kostynchikoff.core_application.presentation.ui.activities.CoreActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 

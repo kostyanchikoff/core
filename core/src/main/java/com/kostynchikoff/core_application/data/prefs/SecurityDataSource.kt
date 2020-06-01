@@ -8,6 +8,7 @@ import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_ACCES
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_ACCESS_TOKEN
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_REFRESH_TOKEN
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_SESSION
+import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_PHONE_NUMBER
 
 /**
  * Возможность хранить защишенные данные (токен, пароль, логин)
@@ -85,4 +86,14 @@ class SecurityDataSource(private val pref: SharedPreferences) {
      */
     fun getSession() = pref.getString(PREF_AUTH_SESSION, EMPTY)
 
+    /**
+     * Сохранить phoneNumber
+     */
+    fun setPhoneNumber(phoneNumber: String) =
+        pref.edit { putString(PREF_PHONE_NUMBER, phoneNumber) }
+
+    /**
+     * Получить phoneNumber
+     */
+    fun getPhoneNumber() = pref.getString(PREF_PHONE_NUMBER, EMPTY)
 }

@@ -17,7 +17,7 @@ ext {
     libraryName = "core"
     artifact = "core"
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.0"
+    libraryVersion = "1.0.1"
     developerId = "kostynchikoff"
     siteUrl = 'https://github.com/kostyanchikoff'
     gitUrl = 'https://github.com/kostyanchikoff/core'
@@ -28,7 +28,9 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-
+//bintray.user=YOUR_BINTRAY_USERNAME
+//bintray.apikey=YOUR_BINTRAY_API_KEY
+//gradlew bintrayUpload команда для отправки в maven
 
 android {
     compileSdkVersion versions.compileSdkVersion
