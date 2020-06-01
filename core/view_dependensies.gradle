@@ -1,0 +1,15 @@
+dependencies {
+    def recyclerView = versions.recyclerViewVersion
+    def maskedPhoneNumber = versions.mackedPhoneNumberVersion
+    def materialDesign = versions.materialDesignVersion
+    def slidinguPpanel = versions.slidinguPpanelVersion
+    def kotlinPleaseAnimate = versions.kotlinPleaseAnimateVersion
+    def constraintLayout = versions.constraintLayoutVersion
+
+    implementation "androidx.recyclerview:recyclerview:$recyclerView"
+    api "ru.egslava:MaskedEditText:$maskedPhoneNumber"
+    implementation "com.google.android.material:material:$materialDesign"
+    api "com.sothree.slidinguppanel:library:$slidinguPpanel"
+    api "com.github.florent37:kotlinpleaseanimate:$kotlinPleaseAnimate"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+}

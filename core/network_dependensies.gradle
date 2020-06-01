@@ -1,0 +1,13 @@
+dependencies {
+    def retrofitVersion = versions.retrofitVersion
+    def coroutineAdapter = versions.coroutineAdapterVersion
+    def mockWebServer = versions.mockWebServerVersion
+    def logInterceptor = versions.logInterceptorVersion
+
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutineAdapter"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logInterceptor"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServer"
+}

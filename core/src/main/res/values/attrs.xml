@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedButton">
+        <attr name="radius" format="float" />
+        <attr name="color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="HeaderView">
+        <attr name="showBackIcon" format="boolean" />
+        <attr name="title" format="string" />
+        <attr name="leftIconVisibility" format="boolean" />
+        <attr name="rightIconVisibility" format="boolean" />
+        <attr name="rightIcon" format="integer" />
+        <attr name="leftIcon" format="integer" />
+    </declare-styleable>
+</resources>

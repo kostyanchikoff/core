@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--ROUNDED BOTTOM SHEET -->
+    <dimen name="roundedBottomSheetCornerRadius">16dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusTopPadding">8dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusLeftPadding">8dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusRightPadding">8dp</dimen>
+    <!--END-->
+
+    <!-- DP -->
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+
+    <!--END-->
+
+    <!-- SP -->
+    <dimen name="sp_26">26sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_40">40sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <!--END-->
+
+</resources>
