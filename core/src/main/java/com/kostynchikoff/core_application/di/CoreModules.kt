@@ -8,14 +8,13 @@ import com.kostynchikoff.core_application.BuildConfig
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_SOURCES_LOCAL
 import com.kostynchikoff.core_application.data.constants.CoreVariables
-import com.kostynchikoff.core_application.data.network.interceptors.ApolloHeaderInterceptor
 import com.kostynchikoff.core_application.data.network.interceptors.DefaultHeadersInterceptor
+import com.kostynchikoff.core_application.data.network.interceptors.OAuthInterceptor
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
 import com.kostynchikoff.core_application.data.prefs.SourcesLocalDataSource
 import com.kostynchikoff.core_application.utils.delegates.LocaleDelegate
 import com.kostynchikoff.core_application.utils.network.getSsl
 import com.securepreferences.SecurePreferences
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -49,6 +48,7 @@ fun createRetrofitOkHttpClient(context: Context): OkHttpClient {
         .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
     val okHttpBuilder = OkHttpClient.Builder()
         .addNetworkInterceptor(DefaultHeadersInterceptor(LocaleDelegate(context).getLocale()))
+        .addInterceptor(OAuthInterceptor())
         .addInterceptor(httpLoggingInterceptor)
         .connectTimeout(CoreConstant.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
         .readTimeout(CoreConstant.READ_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -70,7 +70,7 @@ fun createApolloOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
         .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
     val okHttpBuilder = OkHttpClient.Builder()
-        .addNetworkInterceptor(ApolloHeaderInterceptor())
+        .addNetworkInterceptor(OAuthInterceptor())
         .addInterceptor(httpLoggingInterceptor)
         .connectTimeout(CoreConstant.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
         .readTimeout(CoreConstant.READ_TIMEOUT, TimeUnit.MILLISECONDS)
