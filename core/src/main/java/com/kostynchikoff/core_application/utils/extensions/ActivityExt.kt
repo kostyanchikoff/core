@@ -106,4 +106,49 @@ fun Activity.setTheme(theme: Theme) {
     }
 }
 
+/**
+ * Находит фрагменты для определенного NavHostFragment-a(Контейнера фрагментов)
+ * @param fragmentManager FragmentManager
+ * @param navHostFragmentId Id navHostFragment-а от которого вы хотите получить фрагменты
+ */
+fun Activity.getFragmentsFromNavHostById(fragmentManager: FragmentManager, navHostFragmentId: Int) : List<Fragment>? {
+    val navHostFragment = fragmentManager.findFragmentById(navHostFragmentId)
+    return navHostFragment?.childFragmentManager?.fragments
+}
+
+/**
+ * Анимация для активити слайд снизу вверх
+ */
+fun Activity.animBottomToTop() {
+    if (this is CoreActivity) {
+        animBottomToTop()
+    }
+}
+
+/**
+ * Анимация для активити слайд сверху вниз
+ */
+fun Activity.animTopToBottom() {
+    if (this is CoreActivity) {
+        animTopToBottom()
+    }
+}
+
+/**
+ * Анимация для активити слайд слева вправо
+ */
+fun Activity.animLeftToRight() {
+    if (this is CoreActivity) {
+        animLeftToRight()
+    }
+}
+
+/**
+ * Анимация для активити слайд справа налево
+ */
+fun Activity.rightToLeft() {
+    if (this is CoreActivity) {
+        rightToLeft()
+    }
+}
 
