@@ -5,8 +5,8 @@ import com.apollographql.apollo.ApolloClient
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kostynchikoff.core_application.data.constants.CoreConstant
-import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_SOURCES_LOCAL
 import com.kostynchikoff.core_application.data.constants.CoreVariables
+import com.kostynchikoff.core_application.data.constants.CoreVariables.PREF_SOURCES_LOCAL
 import com.kostynchikoff.core_application.data.network.interceptors.DefaultHeadersInterceptor
 import com.kostynchikoff.core_application.data.network.interceptors.OAuthInterceptor
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource

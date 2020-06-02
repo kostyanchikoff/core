@@ -27,9 +27,22 @@ class OAuthInterceptor : Interceptor, KoinComponent {
         val originalRequest = chain.request()
         val response = chain.proceed(originalRequest)
         val urlOfRequest = originalRequest.url.toString().substringAfter(BASE_URL)
-        if (!URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest)
-            && response.code == HttpURLConnection.HTTP_UNAUTHORIZED
+
+
+        if (!URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) &&
+            response.code == HttpURLConnection.HTTP_UNAUTHORIZED
         ) {
+
+            if (pref.getAccessToken() != null) {
+                val newRequest = originalRequest.newBuilder()
+                    .header(AUTHORIZATION, "Bearer ${pref.getAccessToken()}")
+                    .build()
+                val responseLocal = chain.proceed(newRequest)
+                if (responseLocal.code == HttpURLConnection.HTTP_OK) {
+                    return responseLocal
+                }
+            }
+
             val refreshTokenBody = RefreshTokenRequestDTO(
                 pref.getRefreshToken().orEmpty(),
                 GRANT_TYPE_REFRESH_TOKEN,
@@ -52,9 +65,8 @@ class OAuthInterceptor : Interceptor, KoinComponent {
                 pref.setAccessToken(refreshedToken.access_token)
                 pref.setRefreshToken(refreshedToken.refresh_token)
                 pref.setSession(refreshedToken.session)
-
-                val newCall =
-                    originalRequest.newBuilder().addHeaders(refreshedToken.access_token).build()
+                val token = "${refreshedToken.token_type.orEmpty()} ${refreshedToken.access_token}"
+                val newCall = originalRequest.newBuilder().addHeaders(token).build()
                 chain.proceedDeletingTokenOnError(newCall)
             } else {
                 chain.proceedDeletingTokenOnError(chain.request())

@@ -7,12 +7,14 @@ import com.kostynchikoff.core_application.presentation.controllers.TrackUseAppli
 import com.kostynchikoff.core_application.presentation.controllers.TrackUseApplicationController
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
 
-
 /**
  * Использовать в авторизованой зоне
+ * @param lay layout
+ * @param isUseLocalSession если нужно использовать локальную сессию
  */
-abstract class CoreAuthorizedActivity(lay: Int) : CoreActivity(lay),
-    TrackUseApplication by TrackUseApplicationController() {
+abstract class CoreAuthorizedActivity(lay: Int, isUseLocalSession: Boolean = true) :
+    CoreActivity(lay),
+    TrackUseApplication by TrackUseApplicationController(isUseLocalSession) {
 
     override fun redirectLogin() = showActivityAndClearBackStack(CoreVariables.LOGIN_ACTIVITY)
 
@@ -24,7 +26,6 @@ abstract class CoreAuthorizedActivity(lay: Int) : CoreActivity(lay),
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         onTouchEvent()
         return super.dispatchTouchEvent(ev)
-
     }
 
     override fun onResume() {
