@@ -44,5 +44,10 @@ object CoreVariables {
      */
     var OPERATOR = ""
 
+    /**
+     * Ключ для sharedPreferences, чтобы не было конфликтов в локальных хранилищах
+     */
+    var PREF_SOURCES_LOCAL = OPERATOR
+
 
 }

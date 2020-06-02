@@ -12,7 +12,7 @@ data class RefreshTokenRequestDTO(
 
 data class AuthRefreshTokenDTO(
     @SerializedName("access_token") val access_token: String,
-    @SerializedName("token_type") val token_type: String,
+    @SerializedName("token_type") val token_type: String?,
     @SerializedName("refresh_token") val refresh_token: String,
     @SerializedName("expires_in") val expires_in: String,
     @SerializedName("scope") val scope: String,

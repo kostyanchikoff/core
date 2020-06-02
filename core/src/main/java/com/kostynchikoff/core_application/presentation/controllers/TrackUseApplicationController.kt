@@ -1,6 +1,5 @@
 package com.kostynchikoff.core_application.presentation.controllers
 
-
 import android.os.CountDownTimer
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
 import com.kostynchikoff.core_application.data.prefs.SourcesLocalDataSource
@@ -8,7 +7,6 @@ import com.kostynchikoff.core_application.presentation.ui.activities.CoreActivit
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.lang.ref.WeakReference
-
 
 /**
  * Используеться для отслеживания активности пользователя
@@ -28,7 +26,6 @@ interface TrackUseApplication {
      * Даем понять контроллеру что пользователь использует приложение
      */
     fun onTouchEvent()
-
 
     /**
      * Даем понять контроллеру что пользователь начал пользоваться приложением
@@ -51,7 +48,12 @@ interface TrackUseApplication {
     fun onDestroyTrack()
 }
 
-class TrackUseApplicationController : TrackUseApplication, KoinComponent {
+/**
+ * @param isUseLocalSession нужно ли использовать локальную сессию
+ */
+class TrackUseApplicationController(private val isUseLocalSession: Boolean = true) :
+    TrackUseApplication,
+    KoinComponent {
 
     private val sourceDataPref by inject<SourcesLocalDataSource>()
     private val secureDataPref by inject<SecurityDataSource>()
@@ -67,7 +69,6 @@ class TrackUseApplicationController : TrackUseApplication, KoinComponent {
         startTimer()
     }
 
-
     private fun createCountDownTimer(): CountDownTimer {
         return object : CountDownTimer(timeSession, 1000) {
             override fun onFinish() {
@@ -77,7 +78,6 @@ class TrackUseApplicationController : TrackUseApplication, KoinComponent {
             override fun onTick(p0: Long) {
                 // do nothing
             }
-
         }
     }
 
@@ -85,37 +85,43 @@ class TrackUseApplicationController : TrackUseApplication, KoinComponent {
         minuteSession = minute
     }
 
-
     override fun onTouchEvent() {
         sourceDataPref.setLastTimeUseApplication(System.currentTimeMillis())
         stopTimer()
         startTimer()
-
     }
 
     private fun startTimer() {
-        countDownTimer = createCountDownTimer().start()
+        if (isUseLocalSession)
+            countDownTimer = createCountDownTimer().start()
     }
 
     private fun stopTimer() {
-        countDownTimer?.cancel()
-        countDownTimer = null
+        if (isUseLocalSession) {
+            countDownTimer?.cancel()
+            countDownTimer = null
+        }
     }
 
     override fun onDestroyTrack() {
         mActivity?.clear()
         mActivity = null
-        sourceDataPref.removeLastTimeUseApplication()
+
+        if (isUseLocalSession) {
+            sourceDataPref.removeLastTimeUseApplication()
+        }
     }
 
-
     override fun onResumeTrack() {
-        if ((System.currentTimeMillis() - timeSession) >= sourceDataPref.getLastTimeUseApplication() &&
-            sourceDataPref.getLastTimeUseApplication() != 0L
-        ) {
-            clearDataAndRedirectLogin()
-            return
+        if (isUseLocalSession) {
+            if ((System.currentTimeMillis() - timeSession) >= sourceDataPref.getLastTimeUseApplication() &&
+                sourceDataPref.getLastTimeUseApplication() != 0L
+            ) {
+                clearDataAndRedirectLogin()
+                return
+            }
         }
+
         stopTimer()
         startTimer()
     }
@@ -128,5 +134,4 @@ class TrackUseApplicationController : TrackUseApplication, KoinComponent {
         secureDataPref.clearAuthorizedUserData()
         mActivity?.get()?.redirectLogin()
     }
-
 }

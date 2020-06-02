@@ -6,6 +6,7 @@ import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_APOL
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_URL
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASIC_REFRESH_AUTH_HEADER
 import com.kostynchikoff.core_application.data.constants.CoreVariables.LOGIN_ACTIVITY
+import com.kostynchikoff.core_application.data.constants.CoreVariables.OPERATOR
 import com.kostynchikoff.core_application.data.constants.CoreVariables.REFRESH_TOKEN_END_POINT
 import com.kostynchikoff.core_application.data.constants.CoreVariables.URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS
 import org.koin.android.ext.koin.androidContext
@@ -26,6 +27,7 @@ class CoreBuilder(private val application: Application) {
     private var urlsForAuthBearerTokenInterceptor = listOf<String>()
     private var baseAuthHeader: String? = null
     private var refreshTokenEndPoint: String? = null
+    private var operator : String? = null
 
     /**
      * Базовый url для retrofit
@@ -84,6 +86,14 @@ class CoreBuilder(private val application: Application) {
         loginActivity = block()
     }
 
+    /**
+     * Передаем оператор мобильной связи, например TELE2, ALTEL
+     * @param {String.()} передаем стринг
+     */
+    fun operator(block: () -> String?){
+        operator = block()
+    }
+
     fun build() {
         BASE_URL = baseUrl.orEmpty()
         LOGIN_ACTIVITY = loginActivity
@@ -91,6 +101,7 @@ class CoreBuilder(private val application: Application) {
         URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS = urlsForAuthBearerTokenInterceptor
         BASIC_REFRESH_AUTH_HEADER = baseAuthHeader.orEmpty()
         REFRESH_TOKEN_END_POINT = refreshTokenEndPoint.orEmpty()
+        OPERATOR = operator.orEmpty()
 
 
         startKoin {
