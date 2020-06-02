@@ -3,7 +3,6 @@ package com.kostynchikoff.core_application.data.network.interceptors
 import com.google.gson.Gson
 import com.kostynchikoff.core_application.data.constants.CoreConstant.AUTHORIZATION
 import com.kostynchikoff.core_application.data.constants.CoreConstant.GRANT_TYPE_REFRESH_TOKEN
-import com.kostynchikoff.core_application.data.constants.CoreVariables
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_URL
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASIC_REFRESH_AUTH_HEADER
 import com.kostynchikoff.core_application.data.constants.CoreVariables.OPERATOR
