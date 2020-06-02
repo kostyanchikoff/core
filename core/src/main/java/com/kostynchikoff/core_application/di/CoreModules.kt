@@ -4,7 +4,6 @@ import android.content.Context
 import com.apollographql.apollo.ApolloClient
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.kostynchikoff.core_application.BuildConfig
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_SOURCES_LOCAL
 import com.kostynchikoff.core_application.data.constants.CoreVariables
@@ -45,20 +44,15 @@ val coreModule = module {
 fun createRetrofitOkHttpClient(context: Context): OkHttpClient {
     val (manager, factory) = getSsl()
     val httpLoggingInterceptor = HttpLoggingInterceptor()
-        .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+        .setLevel(HttpLoggingInterceptor.Level.BODY)
     val okHttpBuilder = OkHttpClient.Builder()
         .addNetworkInterceptor(DefaultHeadersInterceptor(LocaleDelegate(context).getLocale()))
         .addInterceptor(OAuthInterceptor())
         .addInterceptor(httpLoggingInterceptor)
         .connectTimeout(CoreConstant.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
         .readTimeout(CoreConstant.READ_TIMEOUT, TimeUnit.MILLISECONDS)
-
-
-    if (BuildConfig.DEBUG) {
         okHttpBuilder.sslSocketFactory(factory, manager)
         okHttpBuilder.hostnameVerifier(HostnameVerifier { _, _ -> true })
-    }
-
     return okHttpBuilder.build()
 }
 
@@ -68,19 +62,14 @@ fun createRetrofitOkHttpClient(context: Context): OkHttpClient {
 fun createApolloOkHttpClient(): OkHttpClient {
     val (manager, factory) = getSsl()
     val httpLoggingInterceptor = HttpLoggingInterceptor()
-        .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE)
+        .setLevel(HttpLoggingInterceptor.Level.BODY)
     val okHttpBuilder = OkHttpClient.Builder()
         .addNetworkInterceptor(OAuthInterceptor())
         .addInterceptor(httpLoggingInterceptor)
         .connectTimeout(CoreConstant.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
         .readTimeout(CoreConstant.READ_TIMEOUT, TimeUnit.MILLISECONDS)
-
-
-    if (BuildConfig.DEBUG) {
         okHttpBuilder.sslSocketFactory(factory, manager)
         okHttpBuilder.hostnameVerifier(HostnameVerifier { _, _ -> true })
-    }
-
     return okHttpBuilder.build()
 }
 

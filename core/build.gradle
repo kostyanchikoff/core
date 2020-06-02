@@ -17,7 +17,7 @@ ext {
     libraryName = "core"
     artifact = "core"
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.3"
+    libraryVersion = "1.0.5"
     developerId = "kostynchikoff"
     siteUrl = 'https://github.com/kostyanchikoff'
     gitUrl = 'https://github.com/kostyanchikoff/core'
@@ -35,6 +35,7 @@ ext {
 android {
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
+
 
 
     defaultConfig {
@@ -64,14 +65,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            debuggable = false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        debug {
-            minifyEnabled false
-            debuggable = true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
