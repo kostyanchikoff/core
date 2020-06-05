@@ -2,7 +2,11 @@ package com.kostynchikoff.core_application.utils.extensions
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Parcelable
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -111,7 +115,10 @@ fun Activity.setTheme(theme: Theme) {
  * @param fragmentManager FragmentManager
  * @param navHostFragmentId Id navHostFragment-а от которого вы хотите получить фрагменты
  */
-fun Activity.getFragmentsFromNavHostById(fragmentManager: FragmentManager, navHostFragmentId: Int) : List<Fragment>? {
+fun Activity.getFragmentsFromNavHostById(
+    fragmentManager: FragmentManager,
+    navHostFragmentId: Int
+): List<Fragment>? {
     val navHostFragment = fragmentManager.findFragmentById(navHostFragmentId)
     return navHostFragment?.childFragmentManager?.fragments
 }
@@ -151,4 +158,19 @@ fun Activity.rightToLeft() {
         rightToLeft()
     }
 }
+
+/**
+ * Сделать статус бар прозрачным
+ */
+fun Activity.setupStatusBar() {
+    window?.apply {
+        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = Color.TRANSPARENT
+        }
+        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    }
+}
+
 
