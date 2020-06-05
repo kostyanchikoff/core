@@ -63,7 +63,7 @@ var ALPHA = 1.0f
 fun TextView.expand(container: LinearLayout, iconColor: Int, itemWidth: Int) {
     val bounds = Rect()
     val bubbleWidth = if(itemWidth > 0) itemWidth else bounds.width() + paddingLeft + 10
-    container.setCustomBackground(iconColor, ALPHA)
+    container.setCustomBackground(iconColor, ALPHA, true)
     paint.apply {
 
         getTextBounds(text.toString(), 0, text.length, bounds)
@@ -105,14 +105,14 @@ fun TextView.collapse(
             }
             interpolator = LinearInterpolator()
             duration = DURATION
-            container.setCustomBackground(iconColor, ALPHA - (ALPHA * it.animatedFraction))
+            container.setCustomBackground(iconColor, ALPHA - (ALPHA * it.animatedFraction), false)
             requestLayout()
         }
     }.start()
 
 }
 
-fun View.setCustomBackground(color: Int, alpha: Float) {
+fun View.setCustomBackground(color: Int, alpha: Float, isExpand: Boolean) {
     val containerBackground = GradientDrawable().apply {
         cornerRadius = 100f
         DrawableCompat.setTint(
@@ -124,6 +124,9 @@ fun View.setCustomBackground(color: Int, alpha: Float) {
                 Color.blue(color)
             )
         )
+    }
+    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        containerBackground.setColor(if(isExpand) color else Color.TRANSPARENT)
     }
     background = containerBackground
 }
