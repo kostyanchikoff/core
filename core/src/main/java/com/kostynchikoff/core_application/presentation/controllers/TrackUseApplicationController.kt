@@ -72,7 +72,7 @@ class TrackUseApplicationController(private val isUseLocalSession: Boolean = tru
     private fun createCountDownTimer(): CountDownTimer {
         return object : CountDownTimer(timeSession, 1000) {
             override fun onFinish() {
-                clearDataAndRedirectLogin()
+                redirectLoginInCaseOfInaction()
             }
 
             override fun onTick(p0: Long) {
@@ -117,7 +117,7 @@ class TrackUseApplicationController(private val isUseLocalSession: Boolean = tru
             if ((System.currentTimeMillis() - timeSession) >= sourceDataPref.getLastTimeUseApplication() &&
                 sourceDataPref.getLastTimeUseApplication() != 0L
             ) {
-                clearDataAndRedirectLogin()
+                redirectLoginInCaseOfInaction()
                 return
             }
         }
@@ -130,7 +130,7 @@ class TrackUseApplicationController(private val isUseLocalSession: Boolean = tru
         stopTimer()
     }
 
-    private fun clearDataAndRedirectLogin() {
+    private fun redirectLoginInCaseOfInaction() {
         mActivity?.get()?.redirectLogin()
     }
 }
