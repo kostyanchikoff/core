@@ -131,7 +131,6 @@ class TrackUseApplicationController(private val isUseLocalSession: Boolean = tru
     }
 
     private fun clearDataAndRedirectLogin() {
-        secureDataPref.clearAuthorizedUserData()
         mActivity?.get()?.redirectLogin()
     }
 }
