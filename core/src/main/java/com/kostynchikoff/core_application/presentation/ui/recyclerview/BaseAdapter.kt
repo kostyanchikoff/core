@@ -16,4 +16,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         items.addAll(list)
         notifyDataSetChanged()
     }
+
+    fun getItems() : List<T> = items
+
 }
