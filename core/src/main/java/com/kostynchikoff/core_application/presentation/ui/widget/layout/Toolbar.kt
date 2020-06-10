@@ -2,13 +2,16 @@ package com.kostynchikoff.core_application.presentation.ui.widget.layout
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.core.content.res.ResourcesCompat
 import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.utils.extensions.textColor
 
@@ -25,6 +28,7 @@ class Toolbar : RelativeLayout {
     private var showBackIcon: Boolean? = null
     private var title: String? = null
     private var textColor: Int? = -1
+    private var font: Int = -1
 
     private var titleTv: TextView? = null
     private var leftIconIv: ImageView? = null
@@ -68,7 +72,9 @@ class Toolbar : RelativeLayout {
             showBackIcon =
                 attributes.getBoolean(R.styleable.Toolbar_showBackIcon, false)
             textColor =
-                attributes.getResourceId(R.styleable.Toolbar_titleTextColor, android.R.color.white)
+                attributes.getResourceId(R.styleable.Toolbar_textColor, android.R.color.white)
+            font =
+                attributes.getResourceId(R.styleable.Toolbar_font, R.font.inter_regular)
             attributes.recycle()
 
 
@@ -83,13 +89,16 @@ class Toolbar : RelativeLayout {
             rightIconIv =
                 view.findViewById(R.id.rightIconBv) as ImageView
 
-
             if (!title.isNullOrEmpty()) {
                 setTitle(title!!)
             }
 
             if(textColor!=null) {
                 setTextColor(textColor!!)
+            }
+
+            if(font!=null) {
+                setFont(font)
             }
 
             if (rightIcon != null && rightIcon != 0) {
@@ -124,6 +133,12 @@ class Toolbar : RelativeLayout {
     fun setTextColor(color: Int) {
         titleTv?.let {
             it.textColor(color)
+        }
+    }
+
+    fun setFont(font: Int) {
+        titleTv?.let {
+            it.setTypeface(ResourcesCompat.getFont(context, font))
         }
     }
 
