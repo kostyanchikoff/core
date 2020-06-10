@@ -24,6 +24,7 @@ class RoundedLinearLayout @JvmOverloads constructor(
         } finally {
             ta.recycle()
         }
+        setWillNotDraw(false)
     }
 
     override fun onDraw(canvas: Canvas?) {
