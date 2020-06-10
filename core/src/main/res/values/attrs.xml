@@ -15,6 +15,7 @@
         <attr name="rightIconVisibility" format="boolean" />
         <attr name="rightIcon" format="integer" />
         <attr name="leftIcon" format="integer" />
+        <attr name="titleTextColor" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="RoundedLinearLayout">

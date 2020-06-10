@@ -52,7 +52,7 @@ fun <T : Any> CoreViewModel.unwrap(
              * Если приходит код 401 и ты имеем токен
              * отправляем в стутус редирект в экран логина или запрос нового токена
              */
-            if (result.code == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+            if (result.code == HttpsURLConnection.HTTP_UNAUTHORIZED && !getPref().getAccessToken().isNullOrEmpty()) {
                 statusLiveData.value = Status.REDIRECT_LOGIN
                 return
             }

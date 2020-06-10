@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import com.kostynchikoff.core_application.R
+import com.kostynchikoff.core_application.utils.extensions.textColor
 
 
 class Toolbar : RelativeLayout {
@@ -23,6 +24,7 @@ class Toolbar : RelativeLayout {
     private var rightIconVisibility: Boolean? = null
     private var showBackIcon: Boolean? = null
     private var title: String? = null
+    private var textColor: Int? = -1
 
     private var titleTv: TextView? = null
     private var leftIconIv: ImageView? = null
@@ -65,6 +67,8 @@ class Toolbar : RelativeLayout {
                 attributes.getBoolean(R.styleable.Toolbar_rightIconVisibility, false)
             showBackIcon =
                 attributes.getBoolean(R.styleable.Toolbar_showBackIcon, false)
+            textColor =
+                attributes.getResourceId(R.styleable.Toolbar_titleTextColor, android.R.color.white)
             attributes.recycle()
 
 
@@ -82,6 +86,10 @@ class Toolbar : RelativeLayout {
 
             if (!title.isNullOrEmpty()) {
                 setTitle(title!!)
+            }
+
+            if(textColor!=null) {
+                setTextColor(textColor!!)
             }
 
             if (rightIcon != null && rightIcon != 0) {
@@ -110,6 +118,12 @@ class Toolbar : RelativeLayout {
         title = text
         titleTv?.let {
             it.text = text
+        }
+    }
+
+    fun setTextColor(color: Int) {
+        titleTv?.let {
+            it.textColor(color)
         }
     }
 
