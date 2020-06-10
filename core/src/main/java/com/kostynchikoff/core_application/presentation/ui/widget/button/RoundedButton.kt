@@ -1,12 +1,12 @@
 package com.kostynchikoff.core_application.presentation.ui.widget.button
 
 import android.content.Context
-import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.kostynchikoff.core_application.R
+import com.kostynchikoff.core_application.utils.extensions.drawRoundedBg
 
 
 class RoundedButton @JvmOverloads constructor(
@@ -26,39 +26,8 @@ class RoundedButton @JvmOverloads constructor(
         }
     }
 
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        createRoundedBackground(canvas?.width, canvas?.height)
-    }
-
-    private fun createRoundedBackground(width: Int?, height: Int?) {
-
-        val widthNotNull = width ?: 0
-        val heightNotNull = height ?: 0
-        val bitmap = Bitmap.createBitmap(
-            widthNotNull, heightNotNull, Bitmap.Config.ARGB_8888
-        )
-
-        val canvas = Canvas(bitmap)
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
-        paint.color = ContextCompat.getColor(context,  color)
-        val rectF = RectF(
-            0f,
-            0f,
-            canvas.width.toFloat(),
-            canvas.height.toFloat()
-        )
-        canvas.drawRoundRect(
-            rectF,
-            mRadius,
-            mRadius,
-            paint
-        )
-
-        val drawable = BitmapDrawable(bitmap)
-        background = drawable
+        canvas?.drawRoundedBg(ContextCompat.getColor(context, color), mRadius, this)
     }
 }

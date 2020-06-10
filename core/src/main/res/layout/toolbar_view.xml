@@ -3,16 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="44dp"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/dp_8"
-    android:paddingRight="@dimen/dp_8">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/leftIconBv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:padding="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_32"
         android:visibility="invisible" />
 
     <TextView
@@ -25,16 +23,17 @@
         android:singleLine="true"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        android:textColor="@color/colorGeneralText"
-        android:textSize="@dimen/sp_18" />
+        android:textColor="@color/colorGeneralText" />
 
     <ImageView
         android:id="@+id/rightIconBv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="30dp"
         android:padding="@dimen/dp_8"
-        android:visibility="invisible" />
+        android:visibility="gone"
+        />
 
 </RelativeLayout>
