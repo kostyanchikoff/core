@@ -60,21 +60,21 @@ class Toolbar : RelativeLayout {
             ) ?: return
 
             leftIcon =
-                attributes.getResourceId(R.styleable.Toolbar_leftIcon, 0)
+                attributes.getResourceId(R.styleable.Toolbar_tb_leftIcon, 0)
             rightIcon =
-                attributes.getResourceId(R.styleable.Toolbar_rightIcon, 0)
+                attributes.getResourceId(R.styleable.Toolbar_tb_rightIcon, 0)
             title =
-                attributes.getString(R.styleable.Toolbar_titleToolbar)
+                attributes.getString(R.styleable.Toolbar_tb_titleToolbar)
             leftIconVisibility =
-                attributes.getBoolean(R.styleable.Toolbar_leftIconVisibility, false)
+                attributes.getBoolean(R.styleable.Toolbar_tb_leftIconVisibility, false)
             rightIconVisibility =
-                attributes.getBoolean(R.styleable.Toolbar_rightIconVisibility, false)
+                attributes.getBoolean(R.styleable.Toolbar_tb_rightIconVisibility, false)
             showBackIcon =
-                attributes.getBoolean(R.styleable.Toolbar_showBackIcon, false)
+                attributes.getBoolean(R.styleable.Toolbar_tb_showBackIcon, false)
             textColor =
-                attributes.getResourceId(R.styleable.Toolbar_textColor, android.R.color.white)
+                attributes.getResourceId(R.styleable.Toolbar_tb_textColor, android.R.color.white)
             font =
-                attributes.getResourceId(R.styleable.Toolbar_font, R.font.inter_regular)
+                attributes.getResourceId(R.styleable.Toolbar_tb_font, R.font.inter_regular)
             attributes.recycle()
 
 
