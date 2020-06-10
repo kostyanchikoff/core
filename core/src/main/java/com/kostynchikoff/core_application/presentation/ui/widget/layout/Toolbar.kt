@@ -11,7 +11,8 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import com.kostynchikoff.core_application.R
 
-class HeaderView : RelativeLayout {
+
+class Toolbar : RelativeLayout {
 
     private @DrawableRes
     var leftIcon: Int? = null
@@ -48,30 +49,29 @@ class HeaderView : RelativeLayout {
 
         if (attrs != null && !isInEditMode) {
             val attributes: TypedArray = mContext?.theme?.obtainStyledAttributes(
-                attrs, R.styleable.HeaderView,
+                attrs, R.styleable.Toolbar,
                 defStyleAttr, 0
             ) ?: return
 
             leftIcon =
-                attributes.getResourceId(R.styleable.HeaderView_leftIcon, 0)
+                attributes.getResourceId(R.styleable.Toolbar_leftIcon, 0)
             rightIcon =
-                attributes.getResourceId(R.styleable.HeaderView_rightIcon, 0)
+                attributes.getResourceId(R.styleable.Toolbar_rightIcon, 0)
             title =
-                attributes.getString(R.styleable.HeaderView_title)
+                attributes.getString(R.styleable.Toolbar_titleToolbar)
             leftIconVisibility =
-                attributes.getBoolean(R.styleable.HeaderView_leftIconVisibility, false)
+                attributes.getBoolean(R.styleable.Toolbar_leftIconVisibility, false)
             rightIconVisibility =
-                attributes.getBoolean(R.styleable.HeaderView_rightIconVisibility, false)
+                attributes.getBoolean(R.styleable.Toolbar_rightIconVisibility, false)
             showBackIcon =
-                attributes.getBoolean(R.styleable.HeaderView_showBackIcon, false)
-
+                attributes.getBoolean(R.styleable.Toolbar_showBackIcon, false)
             attributes.recycle()
 
 
             val inflater =
                 mContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view =
-                inflater.inflate(R.layout.view_header, this) as HeaderView
+                inflater.inflate(R.layout.toolbar_view, this) as Toolbar
             leftIconIv =
                 view.findViewById(R.id.leftIconBv) as ImageView
             titleTv =
@@ -121,6 +121,19 @@ class HeaderView : RelativeLayout {
         }
     }
 
+
+    fun doOnClickLeftIcon(block: () -> Unit) {
+        leftIconIv?.setOnClickListener {
+            block()
+        }
+    }
+
+    fun doOnClickRigthIcon(block: () -> Unit) {
+        rightIconIv?.setOnClickListener {
+            block()
+        }
+    }
+
     fun showBackButton() {
         leftIconIv?.visibility = View.VISIBLE
     }
@@ -128,9 +141,10 @@ class HeaderView : RelativeLayout {
     fun setLeftIcon(icon: Int) {
         this.leftIcon = icon
         leftIconIv?.let { iconTv ->
-            leftIcon?.let { iconTv.setImageResource(it) }
+            leftIcon?.let {
+                iconTv.setImageResource(it)
+            }
             iconTv.visibility = View.VISIBLE
         }
     }
-
 }

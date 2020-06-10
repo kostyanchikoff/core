@@ -1,8 +1,11 @@
 package com.kostynchikoff.core_application.utils.extensions
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
 import android.view.View
@@ -173,4 +176,33 @@ fun Activity.setupStatusBar() {
     }
 }
 
+/**
+ * Открывает Google Play App по packageName
+ */
+fun Activity.openGooglePlayByPackageName(packageName: String) {
+    val googlePlayIntent = try {
+        Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("market://details?id=$packageName")
+        )
+    } catch (anfe: ActivityNotFoundException) {
+        Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+        )
+    }
+    startActivity(googlePlayIntent)
+}
+
+/**
+ * Проверяет установлено ли приложении на устройстве по packageName
+ */
+fun Activity.isAppInstalled(packageName: String) : Boolean {
+    return try {
+        packageManager.getPackageInfo(packageName, 0)
+        true
+    } catch (e: PackageManager.NameNotFoundException) {
+        false
+    }
+}
 
