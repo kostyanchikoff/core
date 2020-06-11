@@ -8,6 +8,8 @@ import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_ACCES
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_ACCESS_TOKEN
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_REFRESH_TOKEN
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_AUTH_SESSION
+import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_IS_USE_FACE_ID
+import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_IS_USE_FINGER_PRINT
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PREF_PHONE_NUMBER
 
 /**
@@ -96,4 +98,28 @@ class SecurityDataSource(private val pref: SharedPreferences) {
      * Получить phoneNumber
      */
     fun getPhoneNumber() = pref.getString(PREF_PHONE_NUMBER, EMPTY)
+
+
+    /**
+     * Задаем если необходимо использовать fingerPrint
+     */
+    fun setUseFingerPrint(isUseFingerPrint: Boolean) =
+        pref.edit { putBoolean(PREF_IS_USE_FINGER_PRINT, isUseFingerPrint) }
+
+    /**
+     * Задаем если необходимо использовать faceId
+     */
+    fun setUseFaceIdPrint(isUseFingerPrint: Boolean) =
+        pref.edit { putBoolean(PREF_IS_USE_FACE_ID, isUseFingerPrint) }
+
+    /**
+     * Проверка используеться ли отпечаток пальца
+     */
+    fun isUseFingerPrint(isUseFingerPrint: Boolean) =
+        pref.getBoolean(PREF_IS_USE_FINGER_PRINT, false)
+
+    /**
+     * Проверка используеться ли FaceId
+     */
+    fun isUseFaceIdPrint(isUseFingerPrint: Boolean) = pref.getBoolean(PREF_IS_USE_FACE_ID, false)
 }
