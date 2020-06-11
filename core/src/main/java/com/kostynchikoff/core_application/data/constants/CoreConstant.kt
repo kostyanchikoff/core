@@ -17,6 +17,8 @@ object CoreConstant{
     const val PREF_THEME = "PREF_THEME"
     const val PREF_SESSION_TIME = "PREF_SESSION_TIME"
     const val PREF_SECRET_SHARED = "SECRET_SHARED_PREF"
+    const val PREF_IS_USE_FINGER_PRINT = "PREF_IS_USE_FINGER_PRINT"
+    const val PREF_IS_USE_FACE_ID = "PREF_IS_USE_FACE_ID"
 
     const val PREF_PHONE_NUMBER = "PREF_PHONE_NUMBER"
 
