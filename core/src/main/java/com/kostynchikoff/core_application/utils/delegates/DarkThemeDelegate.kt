@@ -45,7 +45,7 @@ class DarkThemeDelegate : DarkTheme, KoinComponent {
         when (theme) {
             Theme.DARK.name -> makeDarkTheme(window)
             Theme.APP.name -> makeLightTheme(window)
-            else -> makeLightTheme(window)
+            else -> makeDarkTheme(window)
         }
     }
 
