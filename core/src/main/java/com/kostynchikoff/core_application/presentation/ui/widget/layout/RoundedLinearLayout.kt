@@ -32,33 +32,4 @@ class RoundedLinearLayout @JvmOverloads constructor(
         canvas?.drawRoundedBg(ContextCompat.getColor(context, color), mRadius, this)
     }
 
-    // TODO удалить в следущем релизе
-//    private fun createRoundedBackground(width: Int?, height: Int?) {
-//        val widthNotNull = width ?: 0
-//        val heightNotNull = height ?: 0
-//        val bitmap = Bitmap.createBitmap(
-//            widthNotNull, heightNotNull, Bitmap.Config.ARGB_8888
-//        )
-//
-//        val canvas = Canvas(bitmap)
-//        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-//        paint.style = Paint.Style.FILL
-//        paint.isAntiAlias = true
-//        paint.color = ContextCompat.getColor(context, color)
-//        val rectF = RectF(
-//            0f,
-//            0f,
-//            canvas.width.toFloat(),
-//            canvas.height.toFloat()
-//        )
-//        canvas.drawRoundRect(
-//            rectF,
-//            mRadius,
-//            mRadius,
-//            paint
-//        )
-//
-//        val drawable = BitmapDrawable(bitmap)
-//        background = drawable
-//    }
 }
