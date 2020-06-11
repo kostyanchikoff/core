@@ -19,7 +19,7 @@ class RoundedLinearLayout @JvmOverloads constructor(
         val ta =
             context.obtainStyledAttributes(attrs, R.styleable.RoundedLinearLayout, 0, 0)
         try {
-            mRadius = ta.getFloat(R.styleable.RoundedLinearLayout_radius, 20f)
+            mRadius = ta.getDimension(R.styleable.RoundedLinearLayout_radius, 20f)
             color = ta.getResourceId(R.styleable.RoundedLinearLayout_color, R.color.colorPrimary)
         } finally {
             ta.recycle()
