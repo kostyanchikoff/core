@@ -206,3 +206,21 @@ fun Activity.isAppInstalled(packageName: String) : Boolean {
     }
 }
 
+
+/**
+ * Открытие Activity с другого модуля
+ * @param path полный путь к пакету где разположено Activity
+ */
+fun Activity.showModuleActivity(path : String){
+    var intent: Intent? = null
+    try {
+        intent = Intent(
+            this,
+            Class.forName(path)
+        )
+        startActivity(intent)
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
+    }
+}
+
