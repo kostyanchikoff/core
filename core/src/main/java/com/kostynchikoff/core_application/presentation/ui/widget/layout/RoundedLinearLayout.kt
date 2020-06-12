@@ -13,14 +13,14 @@ class RoundedLinearLayout @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private var mRadius = 20f
-    private var color = R.color.colorPrimary
+    private var color = android.R.color.black
 
     init {
         val ta =
             context.obtainStyledAttributes(attrs, R.styleable.RoundedLinearLayout, 0, 0)
         try {
             mRadius = ta.getDimension(R.styleable.RoundedLinearLayout_radius, 20f)
-            color = ta.getResourceId(R.styleable.RoundedLinearLayout_color, R.color.colorPrimary)
+            color = ta.getResourceId(R.styleable.RoundedLinearLayout_color, android.R.color.black)
         } finally {
             ta.recycle()
         }

@@ -26,7 +26,7 @@
         android:singleLine="true"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        android:textColor="@color/colorGeneralText" />
+        android:textColor="@android:color/black" />
 
     <ImageView
         android:id="@+id/rightIconBv"

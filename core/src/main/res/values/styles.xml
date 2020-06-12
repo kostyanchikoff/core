@@ -1,27 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/modeGray5</item>
         <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
         <item name="android:windowActivityTransitions"  tools:ignore="NewApi">true</item>
-        <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
     </style>
 
-    <style name="TextViewStyle" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/colorGeneralText</item>
-    </style>
-
-    <style name="TabBarStyle" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">@color/colorPrimary</item>
-    </style>
-
     <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
-        <item name="colorAccent">@color/modeGray3</item>
+        <item name="colorAccent">@android:color/black</item>
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">

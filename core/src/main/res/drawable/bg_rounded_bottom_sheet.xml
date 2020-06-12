@@ -8,5 +8,5 @@
         android:left="@dimen/roundedBottomSheetCornerRadiusLeftPadding"
         android:right="@dimen/roundedBottomSheetCornerRadiusRightPadding"
         android:top="@dimen/roundedBottomSheetCornerRadiusTopPadding" />
-    <solid android:color="@color/modeGray5" />
+    <solid android:color="@android:color/white" />
 </shape>
