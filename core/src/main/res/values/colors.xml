@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorSnackBarSuccess">#75AD3F</color>
-    <color name="colorWhite">#ffffff</color>
-    <color name="colorSnackBarError">#B30D14</color>
 
-    <color name="colorPrimary">#6749ED</color>
-    <color name="colorAccent">#2E8DE1</color>
-
-    <color name="colorPrimaryDark">#FFFFFF</color>
-    <color name="colorGeneralText">#111114</color>
-    <color name="navTabSelector">#6537ED</color>
-    <color name="modeGray1">#B3B3B4</color>
-    <color name="modeGray2">#CFCFD0</color>
-    <color name="modeGray3">#E2E2E3</color>
-    <color name="modeGray4">#F8F8F8</color>
-    <color name="modeGray5">#FFFFFF</color>
-
-    <color name="colorButton">#6537ED</color>
-    <color name="whiteOpacity">#CCffffff</color>
 </resources>
