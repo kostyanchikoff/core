@@ -109,17 +109,28 @@ class SecurityDataSource(private val pref: SharedPreferences) {
     /**
      * Задаем если необходимо использовать faceId
      */
-    fun setUseFaceIdPrint(isUseFingerPrint: Boolean) =
+    fun setUseFaceId(isUseFingerPrint: Boolean) =
         pref.edit { putBoolean(PREF_IS_USE_FACE_ID, isUseFingerPrint) }
 
     /**
      * Проверка используеться ли отпечаток пальца
      */
-    fun isUseFingerPrint(isUseFingerPrint: Boolean) =
+    fun isUseFingerPrint() =
         pref.getBoolean(PREF_IS_USE_FINGER_PRINT, false)
 
     /**
      * Проверка используеться ли FaceId
      */
-    fun isUseFaceIdPrint(isUseFingerPrint: Boolean) = pref.getBoolean(PREF_IS_USE_FACE_ID, false)
+    fun isUseFaceIdPrint() = pref.getBoolean(PREF_IS_USE_FACE_ID, false)
+
+    /**
+     * Очищаем fingerPrint
+     */
+    fun clearFingerPrint() = pref.edit { remove(PREF_IS_USE_FINGER_PRINT) }
+
+
+    /**
+     * Очищаем faceId
+     */
+    fun clearFaceId() = pref.edit { remove(PREF_IS_USE_FACE_ID) }
 }
