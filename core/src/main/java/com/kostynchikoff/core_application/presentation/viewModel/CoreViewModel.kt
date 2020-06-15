@@ -31,9 +31,9 @@ abstract class CoreViewModel : ViewModel(), KoinComponent,
     /**
      * Вывод ошибок для конкретного поля
      */
-    internal val _errorByType = MutableLiveData<UIValidation>()
-    val errorByType: LiveData<UIValidation>
-        get() = _errorByType
+    internal val _errorByTypeLiveData = MutableLiveData<EventWrapper<UIValidation>>()
+    val errorByTypeLiveData: LiveData<EventWrapper<UIValidation>>
+        get() = _errorByTypeLiveData
 
     internal val _redirectFragment = MutableLiveData<Pair<@IdRes Int, Bundle?>>()
     val redirectFragment: LiveData<Pair<Int, Bundle?>>
