@@ -29,11 +29,11 @@ abstract class CoreViewModel : ViewModel(), KoinComponent,
     val statusLiveData = MutableLiveData<Status>()
 
     /**
-     * Вывод ошибок для валидации полей
+     * Вывод ошибок для конкретного поля
      */
-    internal val _validation = MutableLiveData<UIValidation>()
-    val validation: LiveData<UIValidation>
-        get() = _validation
+    internal val _errorByType = MutableLiveData<UIValidation>()
+    val errorByType: LiveData<UIValidation>
+        get() = _errorByType
 
     internal val _redirectFragment = MutableLiveData<Pair<@IdRes Int, Bundle?>>()
     val redirectFragment: LiveData<Pair<Int, Bundle?>>
