@@ -17,6 +17,10 @@ interface ResultLiveDataHandler {
         // do nothing
     }
 
+    fun errorByType(msg : String, type : String){
+        // do nothing
+    }
+
     fun success(){
         // do nothing
     }

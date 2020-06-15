@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.kostynchikoff.core_application.data.constants.CoreConstant.PERMISSION_DENIED
 import com.kostynchikoff.core_application.data.constants.CoreVariables.LOGIN_ACTIVITY
 import com.kostynchikoff.core_application.data.network.Status
+import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
@@ -29,6 +30,10 @@ abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, Perm
 
     protected val errorMessageObserver = EventObserver<String> {
         error(it)
+    }
+
+    protected  val errorMessageByTypeObserver = EventObserver<UIValidation>{
+        errorByType(it.message, it.type)
     }
 
     private fun redirectLogin() = activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)

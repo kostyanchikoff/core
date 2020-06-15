@@ -5,6 +5,7 @@ import androidx.annotation.IdRes
 import androidx.lifecycle.viewModelScope
 import com.kostynchikoff.core_application.data.network.ResultApi
 import com.kostynchikoff.core_application.data.network.Status
+import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.presentation.viewModel.CoreViewModel
 import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +53,9 @@ fun <T : Any> CoreViewModel.unwrap(
              * Если приходит код 401 и ты имеем токен
              * отправляем в стутус редирект в экран логина или запрос нового токена
              */
-            if (result.code == HttpsURLConnection.HTTP_UNAUTHORIZED && !getPref().getAccessToken().isNullOrEmpty()) {
+            if (result.code == HttpsURLConnection.HTTP_UNAUTHORIZED && !getPref().getAccessToken()
+                    .isNullOrEmpty()
+            ) {
                 statusLiveData.value = Status.REDIRECT_LOGIN
                 return
             }
@@ -82,4 +85,13 @@ fun CoreViewModel.showError(msg: String) {
 
 fun CoreViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? = null) {
     _redirectFragment.value = Pair(action, bundle)
+}
+
+/**
+ * Выводим сообщение для определенного поля
+ * @param errorMessage сообщение которые показываем на UI
+ * @param type тип например Type.password (задаем в текущем модуле для определенного поля)
+ */
+fun CoreViewModel.showErrorByType(errorMessage: String, type: String) {
+    _errorByType.value = UIValidation(errorMessage, type)
 }
