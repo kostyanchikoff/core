@@ -93,5 +93,5 @@ fun CoreViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? = null)
  * @param type тип например Type.password (задаем в текущем модуле для определенного поля)
  */
 fun CoreViewModel.showErrorByType(errorMessage: String, type: String) {
-    _errorByType.value = UIValidation(errorMessage, type)
+    _errorByTypeLiveData.value = EventWrapper(UIValidation(errorMessage, type))
 }
