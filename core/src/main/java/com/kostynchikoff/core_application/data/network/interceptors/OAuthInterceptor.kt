@@ -11,8 +11,10 @@ import com.kostynchikoff.core_application.data.constants.CoreVariables.URLS_OF_U
 import com.kostynchikoff.core_application.data.prefs.SecurityDataSource
 import com.kostynchikoff.core_application.data.user.AuthRefreshTokenDTO
 import com.kostynchikoff.core_application.data.user.RefreshTokenRequestDTO
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.IOException
@@ -71,6 +73,9 @@ class OAuthInterceptor : Interceptor, KoinComponent {
             } else {
                 chain.proceedDeletingTokenOnError(chain.request())
             }
+        } else if (URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) && response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            val oldResponse: Response = chain.proceed(chain.request())
+            return oldResponse.newBuilder().code(HttpURLConnection.HTTP_INTERNAL_ERROR).build()
         }
 
         return response
