@@ -7,7 +7,7 @@ import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.network.ResultApi
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
-import com.kostynchikoff.core_application.presentation.viewModel.CoreViewModel
+import com.kostynchikoff.core_application.presentation.viewModel.CoreAndroidViewModel
 import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection
  * @param errorBlock блок ошибки (по умолчанию String)
  * Если нужно использовать свой тив в ошибке применяем  [launchWithError]
  */
-fun <T : Any> CoreViewModel.launch(
+fun <T : Any> CoreAndroidViewModel.launch(
     block: suspend () -> ResultApi<T>,
     result: (T?) -> Unit,
     errorBlock: ((String?) -> Unit?)? = null
@@ -44,7 +44,7 @@ fun <T : Any> CoreViewModel.launch(
  * @param result результат
  * @param errorBlock блок ошибки с типом String
  */
-fun <T : Any> CoreViewModel.unwrap(
+fun <T : Any> CoreAndroidViewModel.unwrap(
     result: ResultApi<T>,
     successBlock: (T?) -> Unit,
     errorBlock: ((String) -> Unit?)? = null
@@ -96,7 +96,7 @@ fun <T : Any> CoreViewModel.unwrap(
  * @param result результат
  * @param errorBlock блок ошибки (передаем свой тип)
  */
-fun <T : Any, V : Any> CoreViewModel.launchWithError(
+fun <T : Any, V : Any> CoreAndroidViewModel.launchWithError(
     block: suspend () -> ResultApi<T>,
     result: (T?) -> Unit,
     errorBlock: ((V?) -> Unit?)? = null
@@ -117,7 +117,7 @@ fun <T : Any, V : Any> CoreViewModel.launchWithError(
  * @param successBlock получание результата (возврашает тип)
  * @param errorBlock получание ошибки (Возврашает тип переданный в [launchWithError])
  */
-fun <T : Any, V : Any> CoreViewModel.unwrapWithError(
+fun <T : Any, V : Any> CoreAndroidViewModel.unwrapWithError(
     result: ResultApi<T>,
     successBlock: (T?) -> Unit,
     errorBlock: ((V) -> Unit?)? = null
@@ -156,7 +156,7 @@ fun <T : Any, V : Any> CoreViewModel.unwrapWithError(
 /**
  * Выводим сообщение об ошибке
  */
-fun CoreViewModel.showError(msg: String) {
+fun CoreAndroidViewModel.showError(msg: String) {
     _errorLiveData.value = EventWrapper(msg)
 }
 
@@ -166,7 +166,7 @@ fun CoreViewModel.showError(msg: String) {
  * @param [msg] сообщение может быть любого характера
  */
 
-fun CoreViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? = null) {
+fun CoreAndroidViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? = null) {
     _redirectFragment.value = Pair(action, bundle)
 }
 
@@ -175,6 +175,6 @@ fun CoreViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? = null)
  * @param errorMessage сообщение которые показываем на UI
  * @param type тип например Type.password (задаем в текущем модуле для определенного поля)
  */
-fun CoreViewModel.showErrorByType(errorMessage: String?, type: String?) {
+fun CoreAndroidViewModel.showErrorByType(errorMessage: String?, type: String?) {
     _errorByTypeLiveData.value = EventWrapper(UIValidation(type.orEmpty(), errorMessage.orEmpty()))
 }

@@ -1,83 +1,115 @@
 package com.kostynchikoff.core_application.utils
 
 
+import com.google.gson.Gson
 import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.kostynchikoff.core_application.data.network.ResultApi
+import com.kostynchikoff.core_application.data.network.networkPrinter.NetworkErrorPrinter
+import com.kostynchikoff.core_application.data.network.networkPrinter.TestCustomErrorResponse
 import com.kostynchikoff.core_application.utils.network.safeApiCall
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import retrofit2.HttpException
+import retrofit2.Response
 import java.io.EOFException
+import java.lang.reflect.Type
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
+
 class NetworkUtilsTest {
 
 
-
     @Test
-    fun `safeApiCall SocketTimeoutException test`(){
+    fun `safeApiCall SocketTimeoutException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw SocketTimeoutException()
             }, ResultApi.HttpError("Сервер не отвечает"))
         }
     }
 
     @Test
-    fun `safeApiCall SSLHandshakeException test`(){
+    fun `safeApiCall SSLHandshakeException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw SSLHandshakeException("")
             }, ResultApi.HttpError("Возникли проблемы с сертификатом"))
         }
     }
 
     @Test
-    fun `safeApiCall JsonParseException test`(){
+    fun `safeApiCall JsonParseException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw JsonParseException("")
             }, ResultApi.HttpError("Ошибка обработки запроса"))
         }
     }
 
     @Test
-    fun `safeApiCall EOFException test`(){
+    fun `safeApiCall EOFException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw EOFException("")
             }, ResultApi.HttpError("Ошибка загрузки, попробуйте еще раз"))
         }
     }
 
     @Test
-    fun `safeApiCall ConnectException test`(){
+    fun `safeApiCall ConnectException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw ConnectException("")
             }, ResultApi.HttpError("Возникли проблемы с интернетом"))
         }
     }
 
     @Test
-    fun `safeApiCall UnknownHostException test`(){
+    fun `safeApiCall UnknownHostException test`() {
         runBlocking {
-            assertEquals (safeApiCall {
+            assertEquals(safeApiCall {
                 throw UnknownHostException("")
             }, ResultApi.HttpError("Возникли проблемы с интернетом"))
         }
     }
 
     @Test
-    fun `safeApiCall Another test`(){
+    fun `safeApiCall Another test`() {
         runBlocking {
-            assertEquals (safeApiCall {
-                "3r352352gdsgs" as Int
-            }, ResultApi.HttpError("Ошибка : ClassCastException java.lang.String cannot be cast to java.lang.Integer"))
+            assertEquals(
+                safeApiCall {
+                    "3r352352gdsgs" as Int
+                },
+                ResultApi.HttpError("Ошибка : ClassCastException java.lang.String cannot be cast to java.lang.Integer")
+            )
         }
     }
 
+
+    @Test
+    fun `safeApiCall get field from error body test`() = runBlocking {
+        val response: Response<*> =
+            Response.error<String>(
+                403,
+                ResponseBody.create(
+                    "application/json".toMediaTypeOrNull(),
+                    "{\"error\":\"customer_verification_failed\",\"hello\":\"Вы ввели неверный код-пароль\",\"helloErrorResponse\":352352}"
+                )
+            )
+        val responseSafe = safeApiCall<HttpException, TestCustomErrorResponse>({
+            throw HttpException(response)
+        }, TestCustomErrorResponse())
+
+        assertEquals((responseSafe as ResultApi.HttpError<TestCustomErrorResponse>).error?.hello,"Вы ввели неверный код-пароль")
+        assertEquals((responseSafe as ResultApi.HttpError<TestCustomErrorResponse>).error?.helloErrorResponse,"352352")
+    }
+
 }
+
