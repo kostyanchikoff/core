@@ -17,7 +17,7 @@ interface ResultLiveDataHandler {
         // do nothing
     }
 
-    fun errorByType(msg : String, type : String){
+    fun errorByType(type : String, msg : String){
         // do nothing
     }
 
