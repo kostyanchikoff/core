@@ -1,20 +1,49 @@
 package com.kostynchikoff.core_application.presentation.ui.dialogs
 
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import com.kostynchikoff.core_application.data.constants.CoreConstant
-import com.kostynchikoff.core_application.data.constants.CoreVariables.LOGIN_ACTIVITY
+import com.kostynchikoff.core_application.data.constants.CoreVariables
+import com.kostynchikoff.core_application.data.network.Status
+import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
-import com.kostynchikoff.core_application.utils.delegates.LiveDataEvent
-import com.kostynchikoff.core_application.utils.delegates.LiveDataEventDelegate
+import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
+import com.kostynchikoff.core_application.utils.wrappers.EventObserver
 
-// TODO в следущем релизе сделть миграцию все фрагментов на [LiveDataEventDelegate]
-abstract class CoreDialogFragment : DialogFragment(), LiveDataEvent by LiveDataEventDelegate(),
-    PermissionHandler {
 
-    override fun redirectLogin() {
-        activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)
+open class CoreDialogFragment : DialogFragment(),
+    PermissionHandler, ResultLiveDataHandler {
+
+    /**
+     * Для того чтобы отслеживать статусы необходимо подписаться во Fragment-е
+     */
+    protected val statusObserver = Observer<Status> {
+        it?.let {
+            when (it) {
+                Status.SHOW_LOADING -> showLoader()
+                Status.HIDE_LOADING -> hideLoader()
+                Status.REDIRECT_LOGIN -> redirectLogin()
+                Status.SUCCESS -> success()
+                else -> return@let
+            }
+        }
     }
+
+    protected val errorMessageObserver = EventObserver<String> {
+        error(it)
+    }
+
+    /**
+     * Подписка на ошибки
+     * Возврашает строку и тип ошибки, удобно когда нужно вывести ошибку для конкретного случая
+     */
+    protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
+        errorByType(it.message, it.type)
+    }
+
+    private fun redirectLogin() =
+        activity?.showActivityAndClearBackStack(CoreVariables.LOGIN_ACTIVITY)
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
