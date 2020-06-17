@@ -10,6 +10,7 @@ import com.kostynchikoff.core_application.utils.delegates.DarkTheme
 import com.kostynchikoff.core_application.utils.delegates.DarkThemeDelegate
 import com.kostynchikoff.core_application.utils.delegates.TransitionAnimation
 import com.kostynchikoff.core_application.utils.delegates.TransitionAnimationActivityDelegate
+import com.kostynchikoff.core_application.utils.extensions.getSystemUIMode
 import com.kostynchikoff.core_application.utils.extensions.toast
 import com.kostynchikoff.core_application.utils.wrappers.EventObserver
 
@@ -35,7 +36,7 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initTheme(window)
+        initTheme(window, getSystemUIMode())
         initTransition(this)
         super.onCreate(savedInstanceState)
     }

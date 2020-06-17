@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -197,7 +198,7 @@ fun Activity.openGooglePlayByPackageName(packageName: String) {
 /**
  * Проверяет установлено ли приложении на устройстве по packageName
  */
-fun Activity.isAppInstalled(packageName: String) : Boolean {
+fun Activity.isAppInstalled(packageName: String): Boolean {
     return try {
         packageManager.getPackageInfo(packageName, 0)
         true
@@ -211,7 +212,7 @@ fun Activity.isAppInstalled(packageName: String) : Boolean {
  * Открытие Activity с другого модуля
  * @param path полный путь к пакету где разположено Activity
  */
-fun Activity.showModuleActivity(path : String){
+fun Activity.showModuleActivity(path: String) {
     var intent: Intent? = null
     try {
         intent = Intent(
@@ -221,6 +222,19 @@ fun Activity.showModuleActivity(path : String){
         startActivity(intent)
     } catch (e: ClassNotFoundException) {
         e.printStackTrace()
+    }
+}
+
+/**
+ * Проверка какую тему использует устройство
+ * Theme.DARK - темная тема
+ * Theme.APP - светлая тема
+ */
+fun Activity.getSystemUIMode(): Theme {
+    return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_YES -> Theme.DARK
+        Configuration.UI_MODE_NIGHT_NO -> Theme.APP
+        else -> Theme.APP
     }
 }
 
