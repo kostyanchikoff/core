@@ -5,6 +5,7 @@ import android.app.Application
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_APOLLO_URL
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASE_URL
 import com.kostynchikoff.core_application.data.constants.CoreVariables.BASIC_REFRESH_AUTH_HEADER
+import com.kostynchikoff.core_application.data.constants.CoreVariables.IS_PRODUCTION
 import com.kostynchikoff.core_application.data.constants.CoreVariables.LOGIN_ACTIVITY
 import com.kostynchikoff.core_application.data.constants.CoreVariables.OPERATOR
 import com.kostynchikoff.core_application.data.constants.CoreVariables.REFRESH_TOKEN_END_POINT
@@ -28,6 +29,7 @@ class CoreBuilder(private val application: Application) {
     private var baseAuthHeader: String? = null
     private var refreshTokenEndPoint: String? = null
     private var operator : String? = null
+    private var isProduction : Boolean = true
 
     /**
      * Базовый url для retrofit
@@ -94,6 +96,15 @@ class CoreBuilder(private val application: Application) {
         operator = block()
     }
 
+    /**
+     * Передаем флаг true если отправляем на демонстарцию или продакшен
+     * Для разработки передаем false
+     * Для корректной работы приложениея передаем true
+     */
+    fun isProdaction(block: () -> Boolean){
+        isProduction = block()
+    }
+
     fun build() {
         BASE_URL = baseUrl.orEmpty()
         LOGIN_ACTIVITY = loginActivity
@@ -102,6 +113,7 @@ class CoreBuilder(private val application: Application) {
         BASIC_REFRESH_AUTH_HEADER = baseAuthHeader.orEmpty()
         REFRESH_TOKEN_END_POINT = refreshTokenEndPoint.orEmpty()
         OPERATOR = operator.orEmpty()
+        IS_PRODUCTION = isProduction
 
 
         startKoin {

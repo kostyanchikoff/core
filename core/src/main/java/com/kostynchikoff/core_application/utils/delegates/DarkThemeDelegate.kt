@@ -4,6 +4,7 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import com.kostynchikoff.core_application.data.constants.CoreConstant.MIN_VERSION_SUPPORT_DARK_MODE
+import com.kostynchikoff.core_application.data.constants.CoreVariables.IS_PRODUCTION
 import com.kostynchikoff.core_application.data.prefs.SourcesLocalDataSource
 import com.kostynchikoff.core_application.utils.os.getOSVersion
 import org.koin.core.KoinComponent
@@ -29,7 +30,7 @@ interface DarkTheme {
 }
 
 
-class DarkThemeDelegate : DarkTheme, KoinComponent {
+class DarkThemeDelegate() : DarkTheme, KoinComponent {
 
 
     private val sourcesLocalStorage by inject<SourcesLocalDataSource>()
@@ -40,7 +41,7 @@ class DarkThemeDelegate : DarkTheme, KoinComponent {
     }
 
     override fun setTheme(theme: Theme, window: Window) {
-        if (getOSVersion() < MIN_VERSION_SUPPORT_DARK_MODE) {
+        if (getOSVersion() < MIN_VERSION_SUPPORT_DARK_MODE && IS_PRODUCTION) {
             throw RuntimeException("Устройство не поддерживает dart mode")
         }
 
@@ -50,7 +51,7 @@ class DarkThemeDelegate : DarkTheme, KoinComponent {
 
 
     private fun makeTheme(theme: String?, window: Window) {
-        if (getOSVersion() < MIN_VERSION_SUPPORT_DARK_MODE) {
+        if (getOSVersion() < MIN_VERSION_SUPPORT_DARK_MODE && IS_PRODUCTION) {
             return
         }
         when (theme) {

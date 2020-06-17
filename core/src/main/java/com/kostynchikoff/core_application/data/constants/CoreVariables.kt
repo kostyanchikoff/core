@@ -49,5 +49,10 @@ object CoreVariables {
      */
     var PREF_SOURCES_LOCAL = OPERATOR
 
+    /**
+     * Флаг для проверки продовой версии или релизной
+     */
+    var IS_PRODUCTION = true
+
 
 }
