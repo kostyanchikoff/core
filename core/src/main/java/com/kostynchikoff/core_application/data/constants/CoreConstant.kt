@@ -27,4 +27,6 @@ object CoreConstant{
 
     const val AUTHORIZATION  = "Authorization"
     const val GRANT_TYPE_REFRESH_TOKEN = "refresh_token"
+
+    const val MIN_VERSION_SUPPORT_DARK_MODE = 10
 }
