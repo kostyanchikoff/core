@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreVariables
 import com.kostynchikoff.core_application.data.network.Status
+import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
@@ -30,6 +31,15 @@ open class CoreBottomSheetFragment : RoundedBottomSheetDialogFragment(), ResultL
     protected val errorMessageObserver = EventObserver<String> {
         error(it)
     }
+
+    /**
+     * Подписка на ошибки
+     * Возврашает строку и тип ошибки, удобно когда нужно вывести ошибку для конкретного случая
+     */
+    protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
+        errorByType(type = it.message, msg = it.type)
+    }
+
 
     private fun redirectLogin() =
         activity?.showActivityAndClearBackStack(CoreVariables.LOGIN_ACTIVITY)

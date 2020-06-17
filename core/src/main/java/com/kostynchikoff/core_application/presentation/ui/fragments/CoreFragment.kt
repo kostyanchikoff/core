@@ -37,7 +37,7 @@ abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, Perm
      * Возврашает строку и тип ошибки, удобно когда нужно вывести ошибку для конкретного случая
      */
     protected  val errorMessageByTypeObserver = EventObserver<UIValidation>{
-        errorByType(it.message, it.type)
+        errorByType(type = it.message, msg = it.type)
     }
 
     private fun redirectLogin() = activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)
