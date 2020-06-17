@@ -32,6 +32,10 @@ abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, Perm
         error(it)
     }
 
+    /**
+     * Подписка на ошибки
+     * Возврашает строку и тип ошибки, удобно когда нужно вывести ошибку для конкретного случая
+     */
     protected  val errorMessageByTypeObserver = EventObserver<UIValidation>{
         errorByType(it.message, it.type)
     }

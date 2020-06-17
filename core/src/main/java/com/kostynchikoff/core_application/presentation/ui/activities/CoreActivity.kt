@@ -3,11 +3,8 @@ package com.kostynchikoff.core_application.presentation.ui.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.kostynchikoff.core_application.R
-import com.kostynchikoff.core_application.data.constants.CoreVariables.ID_FRAGMENT
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
-import com.kostynchikoff.core_application.utils.callback.OnBackPressedHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.delegates.DarkTheme
 import com.kostynchikoff.core_application.utils.delegates.DarkThemeDelegate
@@ -45,20 +42,13 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
 
     private val errorMessageObserver = EventObserver<String> { toast(it) }
 
-    protected  val errorMessageByTypeObserver = EventObserver<UIValidation>{
+    protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
         errorByType(it.message, it.type)
     }
 
     open fun redirectLogin() {
         // реализовать в случае базовой функциональности
     }
-
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(ID_FRAGMENT)
-        (fragment as? OnBackPressedHandler)?.let {
-            it.backButtonClickEvent()
-            return
-        }
-        super.onBackPressed()
-    }
 }
+
+
