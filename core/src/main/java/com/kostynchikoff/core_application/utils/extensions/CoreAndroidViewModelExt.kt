@@ -152,7 +152,6 @@ fun <T : Any, V : Any> CoreAndroidViewModel.unwrapWithError(
 }
 
 
-
 /**
  * Выводим сообщение об ошибке
  */
@@ -175,6 +174,6 @@ fun CoreAndroidViewModel.redirectToFragment(@IdRes action: Int, bundle: Bundle? 
  * @param errorMessage сообщение которые показываем на UI
  * @param type тип например Type.password (задаем в текущем модуле для определенного поля)
  */
-fun CoreAndroidViewModel.showErrorByType(errorMessage: String?, type: String?) {
+fun CoreAndroidViewModel.showErrorByType(type: String?, errorMessage: String?) {
     _errorByTypeLiveData.value = EventWrapper(UIValidation(type.orEmpty(), errorMessage.orEmpty()))
 }
