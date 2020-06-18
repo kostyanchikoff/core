@@ -1,6 +1,7 @@
 package com.kostynchikoff.core_application.presentation.ui.fragments
 
 import androidx.lifecycle.Observer
+import com.kostynchikoff.core_application.R
 import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.constants.CoreVariables
 import com.kostynchikoff.core_application.data.network.Status
@@ -10,7 +11,8 @@ import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
 import com.kostynchikoff.core_application.utils.wrappers.EventObserver
 
-open class CoreBottomSheetFragment : RoundedBottomSheetDialogFragment(), ResultLiveDataHandler,
+open class CoreBottomSheetFragment(style: Int = R.style.BottomSheetDialogTheme) :
+    RoundedBottomSheetDialogFragment(style), ResultLiveDataHandler,
     PermissionHandler {
 
     /**
