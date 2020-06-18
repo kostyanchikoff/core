@@ -19,7 +19,7 @@ class RoundedButton @JvmOverloads constructor(
         val ta =
             context.obtainStyledAttributes(attrs, R.styleable.RoundedButton, 0, 0)
         try {
-            mRadius = ta.getFloat(R.styleable.RoundedButton_radius, 20f)
+            mRadius = ta.getDimension(R.styleable.RoundedButton_radius, 20f)
             color = ta.getResourceId(R.styleable.RoundedButton_color, android.R.color.black)
         } finally {
             ta.recycle()
