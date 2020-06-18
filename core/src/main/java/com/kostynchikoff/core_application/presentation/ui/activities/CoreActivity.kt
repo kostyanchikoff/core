@@ -44,7 +44,7 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
     private val errorMessageObserver = EventObserver<String> { toast(it) }
 
     protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
-        errorByType(type = it.message, msg = it.type)
+        errorByType(type = it.type, msg = it.message)
     }
 
     open fun redirectLogin() {
