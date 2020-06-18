@@ -39,7 +39,7 @@ open class CoreDialogFragment : DialogFragment(),
      * Возврашает строку и тип ошибки, удобно когда нужно вывести ошибку для конкретного случая
      */
     protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
-        errorByType(type = it.message, msg = it.type)
+        errorByType(type = it.type, msg = it.message)
     }
 
     private fun redirectLogin() =
