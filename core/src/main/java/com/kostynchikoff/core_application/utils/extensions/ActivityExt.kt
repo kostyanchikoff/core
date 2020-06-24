@@ -225,6 +225,25 @@ fun Activity.showModuleActivity(path: String) {
     }
 }
 
+
+/**
+ * Открытие Activity с другого модуля с чисткой back stack-а
+ * @param path полный путь к пакету где разположено Activity
+ */
+fun Activity.showModuleActivityAndClearBackStack(path : String){
+    var intent: Intent? = null
+    try {
+        intent = Intent(
+            this,
+            Class.forName(path)
+        )
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
+    }
+}
+
 /**
  * Проверка какую тему использует устройство
  * Theme.DARK - темная тема
