@@ -3,8 +3,10 @@ package com.kostynchikoff.core_application.presentation.ui.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.kostynchikoff.core_application.data.constants.CoreConstant
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
+import com.kostynchikoff.core_application.utils.callback.PermissionHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
 import com.kostynchikoff.core_application.utils.delegates.DarkTheme
 import com.kostynchikoff.core_application.utils.delegates.DarkThemeDelegate
@@ -17,7 +19,17 @@ import com.kostynchikoff.core_application.utils.wrappers.EventObserver
 
 abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHandler,
     DarkTheme by DarkThemeDelegate(),
-    TransitionAnimation by TransitionAnimationActivityDelegate() {
+    TransitionAnimation by TransitionAnimationActivityDelegate(), PermissionHandler {
+
+    protected val errorMessageObserver = EventObserver<String> { toast(it) }
+
+    protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
+        errorByType(type = it.type, msg = it.message)
+    }
+
+    open fun redirectLogin() {
+        // реализовать в случае базовой функциональности
+    }
 
     /**
      * Для того чтобы отслеживать статусы необходимо подписаться в Activity
@@ -41,15 +53,27 @@ abstract class CoreActivity(lay: Int) : AppCompatActivity(lay), ResultLiveDataHa
         super.onCreate(savedInstanceState)
     }
 
-    protected val errorMessageObserver = EventObserver<String> { toast(it) }
-
-    protected val errorMessageByTypeObserver = EventObserver<UIValidation> {
-        errorByType(type = it.type, msg = it.message)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        grantResults.forEach {
+            when {
+                it != CoreConstant.PERMISSION_DENIED -> {
+                    confirmPermission()
+                    return
+                }
+                else -> {
+                    ignorePermission()
+                    return
+                }
+            }
+        }
     }
 
-    open fun redirectLogin() {
-        // реализовать в случае базовой функциональности
-    }
+
 }
 
 

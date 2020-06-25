@@ -5,10 +5,12 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
+import android.provider.MediaStore
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -256,4 +258,13 @@ fun Activity.getSystemUIMode(): Theme {
         else -> Theme.APP
     }
 }
+
+
+/**
+ * Получение Bitmap через URI
+ * @param uri изображение
+ * @return bitmap
+ */
+fun Activity.getBitmapFromUri(data: Uri?): Bitmap? =
+    MediaStore.Images.Media.getBitmap(contentResolver, data)
 

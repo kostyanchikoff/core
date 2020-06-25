@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kostynchikoff.core_application.utils.permission.Permission
 import com.kostynchikoff.core_application.utils.permission.PermissionImpl
 
@@ -56,3 +57,40 @@ fun FragmentActivity.doOnBackPresed(block : () -> Unit){
         }
     onBackPressedDispatcher.addCallback(this, callback)
 }
+
+
+
+/**
+ * Находим все открытие нижние диалоги во [FragmentManager]
+ * @param manager FragmentManager
+ * @param nameDialog имя диалога (достаем имя через рефлексию) BottomSheetDialogFragment::class.simpleName
+ * @return найденный диалог в противном случае null
+ */
+fun Fragment.getDialogBottomSheetDialogFragmentByName(
+    nameDialog: String?
+): BottomSheetDialogFragment? {
+    val fragments = fragmentManager?.fragments?.toMutableList()
+    return fragments?.filter { it is BottomSheetDialogFragment }
+        ?.find { it::class.simpleName == nameDialog } as? BottomSheetDialogFragment
+}
+
+
+/**
+ * Находит открытие [BottomSheetDialogFragment]
+ * @param dialogs список [BottomSheetDialogFragment]
+ * @return [BottomSheetDialogFragment] первый найденный диалог
+ */
+fun Fragment.searchBottomSheerDialogFragment(
+    vararg dialogs : String?
+): BottomSheetDialogFragment? {
+    var dialog: BottomSheetDialogFragment? = null
+    dialogs.forEach {
+        dialog = getDialogBottomSheetDialogFragmentByName(it)
+        if (dialog != null) {
+            return dialog
+        }
+    }
+
+    return dialog
+}
+
