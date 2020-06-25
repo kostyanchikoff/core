@@ -51,8 +51,8 @@ fun <T : Any> CoreViewModel.unwrap(
 ) {
     when (result) {
         is ResultApi.Success -> {
-            successBlock(result.data)
             statusLiveData.value = Status.HIDE_LOADING
+            successBlock(result.data)
         }
         is ResultApi.HttpError<*> -> {
             /**
@@ -124,8 +124,8 @@ fun <T : Any, V : Any> CoreViewModel.unwrapWithError(
 ) {
     when (result) {
         is ResultApi.Success -> {
-            successBlock(result.data)
             statusLiveData.value = Status.HIDE_LOADING
+            successBlock(result.data)
         }
         is ResultApi.HttpError<*> -> {
             val error = (result.error as? V) ?: return
