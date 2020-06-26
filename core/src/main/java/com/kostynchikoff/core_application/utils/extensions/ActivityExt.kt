@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.kostynchikoff.core_application.data.constants.CoreConstant.ARG_ANIM
@@ -22,6 +23,7 @@ import com.kostynchikoff.core_application.presentation.ui.activities.CoreActivit
 import com.kostynchikoff.core_application.utils.delegates.Theme
 import com.kostynchikoff.core_application.utils.permission.ActivityaPermissionImpl
 import com.kostynchikoff.core_application.utils.permission.Permission
+import java.io.File
 
 
 /**
@@ -267,4 +269,27 @@ fun Activity.getSystemUIMode(): Theme {
  */
 fun Activity.getBitmapFromUri(data: Uri?): Bitmap? =
     MediaStore.Images.Media.getBitmap(contentResolver, data)
+
+
+/**
+ *  Позволяет делиться файлом с другим приложением
+ *  @param file файл который необходимо отправить в другое приложение
+ *  @param pkg пакет в котором происходит деление файла например com.app.application
+ *  @param typeFile тип файла например application/pdf
+ *
+ */
+fun Activity.shareFile(
+    file : File,
+    pkg : String,
+    typeFile : String
+) {
+    val uri = FileProvider.getUriForFile(this, pkg, file)
+    val shareIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_STREAM, uri)
+        type = typeFile
+    }
+    startActivity(Intent.createChooser(shareIntent, null))
+}
+
 
