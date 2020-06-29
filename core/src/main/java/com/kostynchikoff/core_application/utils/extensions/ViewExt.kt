@@ -10,14 +10,18 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.DrawableCompat
+import com.kostynchikoff.core_application.presentation.ui.widget.textWatcher.AmountWithZeroTextWatcher
 
 /**
  * Created by Yergali Zhakhan on 5/20/20.
@@ -129,4 +133,35 @@ fun View.setCustomBackground(color: Int, alpha: Float, isExpand: Boolean) {
         containerBackground.setColor(if(isExpand) color else Color.TRANSPARENT)
     }
     background = containerBackground
+}
+
+
+/**
+ * Случатель текстового поля
+ */
+fun TextView.doOnTextChange(block: (CharSequence?) -> Any) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) {
+            // do nothing
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            // do nothing
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            block(p0)
+        }
+
+    })
+}
+
+
+/**
+ * Случатель текстового поля с формированием числового значения
+ */
+fun EditText.amountWithZeroDoOnTextChange(block : (String) -> Unit){
+    this.addTextChangedListener(AmountWithZeroTextWatcher(this) {
+        block(it)
+    })
 }

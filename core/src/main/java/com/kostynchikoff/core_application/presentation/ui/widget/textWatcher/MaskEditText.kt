@@ -1,4 +1,4 @@
-package com.kostynchikoff.core_application.presentation.ui.widget.editText
+package com.kostynchikoff.core_application.presentation.ui.widget.textWatcher
 
 import android.content.Context
 import android.text.TextWatcher
