@@ -46,7 +46,7 @@ fun DialogFragment.show(fm : FragmentManager?) : DialogFragment{
 
 
 /**
- * Перехватчик перехода назад для fragment-ов в navigation library
+ * Перехватчик перехода назад для fragment-ов в navigation library для Activity
  */
 fun FragmentActivity.doOnBackPresed(block : () -> Unit){
     val callback: OnBackPressedCallback =
@@ -92,5 +92,19 @@ fun Fragment.searchBottomSheerDialogFragment(
     }
 
     return dialog
+}
+
+
+/**
+ * Перехватчик перехода назад для fragment-ов в navigation library для Fragment
+ */
+fun Fragment.onBackPressed(block: () -> Unit) {
+    val callback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true /* enabled by default */) {
+            override fun handleOnBackPressed() {
+                block()
+            }
+        }
+    requireActivity().onBackPressedDispatcher.addCallback(this, callback)
 }
 
