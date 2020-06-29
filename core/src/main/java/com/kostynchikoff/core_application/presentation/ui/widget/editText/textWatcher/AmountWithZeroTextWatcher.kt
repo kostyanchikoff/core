@@ -1,9 +1,10 @@
-package com.kostynchikoff.core_application.presentation.ui.widget.textWatcher
+package com.kostynchikoff.core_application.presentation.ui.widget.editText.textWatcher
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.kostynchikoff.core_application.data.constants.CoreConstant
+import com.kostynchikoff.core_application.data.constants.CorePatternConstant.PATTERN_FORMAT_ANOUNT_SPACE_ZERO
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.ParseException
@@ -13,7 +14,7 @@ class AmountWithZeroTextWatcher(private val et: EditText, private val block : (S
     private val decimalFormatSymbol = DecimalFormatSymbols().apply {
         groupingSeparator = ' '
     }
-    private val formatter: DecimalFormat = DecimalFormat("###,###.00", decimalFormatSymbol).apply {
+    private val formatter: DecimalFormat = DecimalFormat(PATTERN_FORMAT_ANOUNT_SPACE_ZERO, decimalFormatSymbol).apply {
         maximumFractionDigits = 2
         maximumIntegerDigits = 10
     }

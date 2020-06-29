@@ -21,7 +21,9 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.DrawableCompat
-import com.kostynchikoff.core_application.presentation.ui.widget.textWatcher.AmountWithZeroTextWatcher
+import com.kostynchikoff.core_application.data.constants.CorePatternConstant
+import com.kostynchikoff.core_application.presentation.ui.widget.editText.textWatcher.AmountWithZeroTextWatcher
+import com.kostynchikoff.core_application.presentation.ui.widget.editText.textWatcher.PhoneNumberTextWatcher
 
 /**
  * Created by Yergali Zhakhan on 5/20/20.
@@ -162,6 +164,16 @@ fun TextView.doOnTextChange(block: (CharSequence?) -> Any) {
  */
 fun EditText.amountWithZeroDoOnTextChange(block : (String) -> Unit){
     this.addTextChangedListener(AmountWithZeroTextWatcher(this) {
+        block(it)
+    })
+}
+
+
+/**
+ * Случатель текстового поля с формированием числового значения
+ */
+fun EditText.phoneNumberDoOnTextChange(block : (String) -> Unit, mask : String = CorePatternConstant.PATTERN_DEFOULT_PHONE_NUMBER){
+    this.addTextChangedListener(PhoneNumberTextWatcher(this, mask) {
         block(it)
     })
 }
