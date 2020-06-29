@@ -1,12 +1,10 @@
 package com.kostynchikoff.core_application.utils
 
 
-import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.google.gson.reflect.TypeToken
 import com.kostynchikoff.core_application.data.network.ResultApi
-import com.kostynchikoff.core_application.data.network.networkPrinter.NetworkErrorPrinter
 import com.kostynchikoff.core_application.data.network.networkPrinter.TestCustomErrorResponse
+import com.kostynchikoff.core_application.data.network.networkPrinter.TestError
 import com.kostynchikoff.core_application.utils.network.safeApiCall
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -16,7 +14,6 @@ import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.EOFException
-import java.lang.reflect.Type
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -103,13 +100,17 @@ class NetworkUtilsTest {
                     "{\"error\":\"customer_verification_failed\",\"hello\":\"Вы ввели неверный код-пароль\",\"helloErrorResponse\":352352}"
                 )
             )
-        val responseSafe = safeApiCall<HttpException, TestCustomErrorResponse>({
+        val responseSafe = safeApiCall({
             throw HttpException(response)
         }, TestCustomErrorResponse())
 
-        assertEquals((responseSafe as ResultApi.HttpError<TestCustomErrorResponse>).error?.hello,"Вы ввели неверный код-пароль")
-        assertEquals((responseSafe as ResultApi.HttpError<TestCustomErrorResponse>).error?.helloErrorResponse,"352352")
+        assertEquals((responseSafe as ResultApi.HttpError<TestError>).error?.hello,"Вы ввели неверный код-пароль")
+        assertEquals((responseSafe as ResultApi.HttpError<TestError>).error?.helloErrorResponse,"352352")
     }
 
 }
+
+suspend fun  a () = safeApiCall ({
+
+},TestCustomErrorResponse())
 

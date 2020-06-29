@@ -1,50 +1,13 @@
 package com.kostynchikoff.core_application.data.network.networkPrinter
 
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
+import com.kostynchikoff.core_application.utils.parseJson
 
-class ErrorHttpResponse : NetworkErrorPrinter<String> {
-
-    // TODO удалить после тестирования
-//    companion object {
-//        /**
-//         * Парсинг ответа сервера вручную в объект [ErrorResponse]
-//         *
-//         * Этот метод должен оставаться приватным
-//         * (ничего страшного, что каждый раз создаётся новый объект)
-//         */
-//        @Throws(JsonSyntaxException::class)
-//        private fun from(response: String?): ErrorHttpResponse {
-//            return Gson().fromJson(response, ErrorHttpResponse::class.java)
-//        }
-//
-//        fun print(response: String?, default: String) = try {
-//            from(
-//                response
-//            ).print(default)
-//        } catch (e: Exception) {
-//            default
-//        }
-//    }
-
-    private val error: String? = null
-    private val message: String? = null
-
-    override fun print(default: String): String {
-        return message ?: error ?: default
+class ErrorHttpResponse : NetworkErrorHttpPrinter<DefaultError> {
+    override fun print(response: String?, default: String?): DefaultError {
+        return parseJson<DefaultError>(response)  ?: DefaultError(message = default)
     }
-
-    override fun print(response: String?, default: String) = try {
-        from(
-            response
-        ).print(default)
-    } catch (e: Exception) {
-        default
-    }
-
-    override fun from(response: String?) = Gson().fromJson(response, ErrorHttpResponse::class.java)
-
-
 }
+
+class DefaultError(val error: String? = null, val message: String? = null)
 
 
