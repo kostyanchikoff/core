@@ -3,7 +3,7 @@ package com.kostynchikoff.core_application.utils.network
 import com.google.gson.JsonParseException
 import com.kostynchikoff.core_application.data.network.networkPrinter.ErrorHttpResponse
 import com.kostynchikoff.core_application.data.network.ResultApi
-import com.kostynchikoff.core_application.data.network.networkPrinter.NetworkErrorPrinter
+import com.kostynchikoff.core_application.data.network.networkPrinter.NetworkErrorHttpPrinter
 import retrofit2.HttpException
 import java.io.EOFException
 import java.net.ConnectException
@@ -38,7 +38,7 @@ suspend fun <T : Any> safeApiCall(
  */
 suspend fun <T : Any, V> safeApiCall(
     call: suspend () -> T,
-    errorPrinter: NetworkErrorPrinter<V>
+    errorPrinter: NetworkErrorHttpPrinter<V>
 ): ResultApi<T> {
     return try {
         ResultApi.Success(call.invoke())
@@ -50,7 +50,7 @@ suspend fun <T : Any, V> safeApiCall(
 
 fun <T : Any, V> handleException(
     e: Exception,
-    customResponseError: NetworkErrorPrinter<V>?
+    customResponseError: NetworkErrorHttpPrinter<V>?
 ): ResultApi<T> =
     when (e) {
         is HttpException -> handleHttpException(e, customResponseError)
@@ -65,7 +65,7 @@ fun <T : Any, V> handleException(
 
 private fun <T : Any, V> handleHttpException(
     e: HttpException,
-    customResponseError: NetworkErrorPrinter<V>?
+    customResponseError: NetworkErrorHttpPrinter<V>?
 ): ResultApi<T> {
     val errorBody = e.response()?.errorBody()?.string().orEmpty()
     return when (e.code()) {
@@ -77,6 +77,4 @@ private fun <T : Any, V> handleHttpException(
             ResultApi.HttpError(customResponseError?.print(errorBody, "Ошибка"), e.code())
         }
     }
-
-
 }

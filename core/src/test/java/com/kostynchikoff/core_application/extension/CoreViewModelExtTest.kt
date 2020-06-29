@@ -3,6 +3,7 @@ package com.kostynchikoff.core_application.extension
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.data.network.networkPrinter.TestCustomErrorResponse
+import com.kostynchikoff.core_application.data.network.networkPrinter.TestError
 import com.kostynchikoff.core_application.presentation.viewModel.ViewModelTest
 import com.kostynchikoff.core_application.utils.extensions.launch
 import com.kostynchikoff.core_application.utils.extensions.launchWithError
@@ -84,7 +85,7 @@ class CoreViewModelExtTest : KoinComponent {
                     "{\"error\":\"customer_verification_failed\",\"hello\":\"Вы ввели неверный код-пароль\",\"helloErrorResponse\":352352}"
                 )
             )
-        viewModel.launchWithError<HttpException, TestCustomErrorResponse>({
+        viewModel.launchWithError<HttpException, TestError>({
             safeApiCall ({
                 throw HttpException(response)
             }, TestCustomErrorResponse())
@@ -107,7 +108,7 @@ class CoreViewModelExtTest : KoinComponent {
                     "{\"error\":\"customer_verification_failed\",\"hello\":\"Вы ввели неверный код-пароль\",\"helloErrorResponse\":352352}"
                 )
             )
-        viewModel.launchWithError<HttpException, TestCustomErrorResponse>({
+        viewModel.launchWithError<HttpException, TestError>({
             safeApiCall ({
                 throw HttpException(response)
             }, TestCustomErrorResponse())
@@ -142,7 +143,6 @@ class CoreViewModelExtTest : KoinComponent {
         }
 
     }
-
 
     @After
     fun doAfterEach() {
