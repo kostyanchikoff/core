@@ -1,6 +1,8 @@
 package com.kostynchikoff.core_application.utils.extensions
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -40,3 +42,16 @@ fun Context.startVibrator(milliseconds: Long) {
 }
 
 fun Context.toSp(px: Float) = px / resources.displayMetrics.scaledDensity
+
+/**
+ * Показываем файл через стандартные средства устройства
+ * @param uri файла
+ * @param type файла например application/pdf
+ */
+fun Context.showFileInSystemDevice(uri: Uri, type: String) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(uri, type)
+        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+    }
+    startActivity(intent)
+}
