@@ -31,51 +31,63 @@ class OAuthInterceptor : Interceptor, KoinComponent {
         val urlOfRequest = originalRequest.url.toString().substringAfter(BASE_URL)
 
 
-        if (!URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) &&
-            response.code == HttpURLConnection.HTTP_UNAUTHORIZED
-        ) {
+        when {
+            !URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) &&
+                    response.code == HttpURLConnection.HTTP_UNAUTHORIZED
+            -> {
 
-            if (pref.getAccessToken() != null) {
-                val newRequest = originalRequest.newBuilder()
-                    .header(AUTHORIZATION, "Bearer ${pref.getAccessToken()}")
+                if (pref.getAccessToken() != null) {
+                    val newRequest =
+                        originalRequest.newBuilder()
+                            .addHeaders("Bearer ${pref.getAccessToken()}")
+                            .build()
+                    val responseLocal = chain.proceed(newRequest)
+                    if (responseLocal.code == HttpURLConnection.HTTP_OK) {
+                        return responseLocal
+                    }
+                }
+
+                val refreshTokenBody = RefreshTokenRequestDTO(
+                    pref.getRefreshToken().orEmpty(),
+                    GRANT_TYPE_REFRESH_TOKEN,
+                    OPERATOR
+                )
+                val body = Gson().toJson(refreshTokenBody).toString().toRequestBody()
+                val refreshTokenRequest = originalRequest
+                    .newBuilder()
+                    .post(body)
+                    .url(BASE_URL + REFRESH_TOKEN_END_POINT)
+                    .addHeaders(BASIC_REFRESH_AUTH_HEADER)
                     .build()
-                val responseLocal = chain.proceed(newRequest)
-                if (responseLocal.code == HttpURLConnection.HTTP_OK) {
-                    return responseLocal
+
+                val refreshResponse = chain.proceedDeletingTokenOnError(refreshTokenRequest)
+                if (refreshResponse.isSuccessful) {
+                    val refreshedToken = Gson().fromJson(
+                        refreshResponse.body?.string(),
+                        AuthRefreshTokenDTO::class.java
+                    )
+                    pref.setAccessToken(refreshedToken.access_token)
+                    pref.setRefreshToken(refreshedToken.refresh_token)
+                    pref.setSession(refreshedToken.session)
+                    val token =
+                        "${refreshedToken.token_type.orEmpty()} ${refreshedToken.access_token}"
+                    val newCall = originalRequest.newBuilder().addHeaders(token).build()
+                    chain.proceedDeletingTokenOnError(newCall)
+                } else {
+                    chain.proceedDeletingTokenOnError(chain.request())
                 }
             }
-
-            val refreshTokenBody = RefreshTokenRequestDTO(
-                pref.getRefreshToken().orEmpty(),
-                GRANT_TYPE_REFRESH_TOKEN,
-                OPERATOR
-            )
-            val body = Gson().toJson(refreshTokenBody).toString().toRequestBody()
-            val refreshTokenRequest = originalRequest
-                .newBuilder()
-                .post(body)
-                .url(BASE_URL + REFRESH_TOKEN_END_POINT)
-                .addHeaders(BASIC_REFRESH_AUTH_HEADER)
-                .build()
-
-            val refreshResponse = chain.proceedDeletingTokenOnError(refreshTokenRequest)
-            if (refreshResponse.isSuccessful) {
-                val refreshedToken = Gson().fromJson(
-                    refreshResponse.body?.string(),
-                    AuthRefreshTokenDTO::class.java
-                )
-                pref.setAccessToken(refreshedToken.access_token)
-                pref.setRefreshToken(refreshedToken.refresh_token)
-                pref.setSession(refreshedToken.session)
-                val token = "${refreshedToken.token_type.orEmpty()} ${refreshedToken.access_token}"
-                val newCall = originalRequest.newBuilder().addHeaders(token).build()
-                chain.proceedDeletingTokenOnError(newCall)
-            } else {
-                chain.proceedDeletingTokenOnError(chain.request())
+            URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) && response.code == HttpURLConnection.HTTP_UNAUTHORIZED -> {
+                val oldResponse: Response = chain.proceed(chain.request())
+                return oldResponse.newBuilder().code(HttpURLConnection.HTTP_INTERNAL_ERROR).build()
             }
-        } else if (URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) && response.code == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            val oldResponse: Response = chain.proceed(chain.request())
-            return oldResponse.newBuilder().code(HttpURLConnection.HTTP_INTERNAL_ERROR).build()
+            !URLS_OF_UNNECESSARY_BEARER_TOKEN_ENDPOINTS.contains(urlOfRequest) -> {
+                val newRequest =
+                    originalRequest.newBuilder()
+                        .addHeaders("Bearer ${pref.getAccessToken()}")
+                        .build()
+                return chain.proceed(newRequest)
+            }
         }
 
         return response
