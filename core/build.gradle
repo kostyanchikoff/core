@@ -17,14 +17,14 @@ ext {
     libraryName = "core"
     artifact = "core"
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.0-alpha-46"
+    libraryVersion = "1.0.0-alpha-48"
     developerId = "kostynchikoff"
     siteUrl = 'https://github.com/kostyanchikoff'
     gitUrl = 'https://github.com/kostyanchikoff/core'
     developerName = "Konstantin"
     developerEmail = "kostya.sherba97@gmail.com"
     licenseName = "The Apache Software License, Version 2.0"
-    licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+    licenseUrl = "http://www.apache.orggit/licenses/LICENSE-2.0.txt"
     allLicenses = ["Apache-2.0"]
 }
 
