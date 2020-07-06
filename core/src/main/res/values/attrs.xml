@@ -8,19 +8,9 @@
         <attr name="color" />
     </declare-styleable>
 
-    <declare-styleable name="Toolbar">
-        <attr name="tb_showBackIcon" format="boolean" />
-        <attr name="tb_titleToolbar" format="reference" />
-        <attr name="tb_leftIconVisibility" format="boolean" />
-        <attr name="tb_rightIconVisibility" format="boolean" />
-        <attr name="tb_rightIcon" format="integer" />
-        <attr name="tb_leftIcon" format="integer" />
-        <attr name="tb_textColor" format="reference" />
-        <attr name="tb_font" format="reference" />
-    </declare-styleable>
-
     <declare-styleable name="RoundedLinearLayout">
         <attr name="radius" />
         <attr name="color" />
     </declare-styleable>
+
 </resources>
