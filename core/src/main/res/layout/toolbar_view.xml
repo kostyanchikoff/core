@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginStart="@dimen/dp_24"
         android:visibility="invisible" />
 
     <TextView
@@ -34,8 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:padding="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_24"
         android:visibility="gone" />
 
 </RelativeLayout>
