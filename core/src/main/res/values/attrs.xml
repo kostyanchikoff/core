@@ -13,4 +13,17 @@
         <attr name="color" />
     </declare-styleable>
 
+    <declare-styleable name="AuthFragmentNavigator" parent="androidx.navigation.R.styleable.FragmentNavigator">
+        <attr name="android:name" />
+
+        <!-- нуждаеться ли  данный фрагмент в  авторизации-->
+        <attr name="authFragment" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="AuthNavHostFragment"  parent=" androidx.navigation.R.styleable.NavHost">
+        <!-- Путь до авторизации (ПОЛНЫЙ ПУТЬ ДО ACTIVITY)-->
+        <attr name="pathAuthActivity" />
+    </declare-styleable>
+
 </resources>
