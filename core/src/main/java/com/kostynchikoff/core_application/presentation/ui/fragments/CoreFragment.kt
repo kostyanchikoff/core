@@ -8,10 +8,15 @@ import com.kostynchikoff.core_application.data.network.Status
 import com.kostynchikoff.core_application.presentation.model.UIValidation
 import com.kostynchikoff.core_application.utils.callback.PermissionHandler
 import com.kostynchikoff.core_application.utils.callback.ResultLiveDataHandler
+import com.kostynchikoff.core_application.utils.extensions.goPendingFragment
 import com.kostynchikoff.core_application.utils.extensions.showActivityAndClearBackStack
 import com.kostynchikoff.core_application.utils.wrappers.EventObserver
 
-abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, PermissionHandler {
+/**
+ * Фрагмент для авторизованой зоны, в случаем ели не пребуеться сразу переходить
+ * в авторизовый фрагмент передаем  [isGoToPendingFragment] false
+ */
+abstract class CoreFragment(id: Int, private val isGoToPendingFragment : Boolean = true) : Fragment(id), ResultLiveDataHandler, PermissionHandler {
 
     /**
      * Для того чтобы отслеживать статусы необходимо подписаться во Fragment-е
@@ -40,7 +45,7 @@ abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, Perm
         errorByType(type = it.type, msg = it.message)
     }
 
-    private fun redirectLogin() = activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -61,4 +66,13 @@ abstract class CoreFragment(id: Int) : Fragment(id), ResultLiveDataHandler, Perm
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (isGoToPendingFragment)
+            goPendingFragment()
+    }
+
+
+    private fun redirectLogin() = activity?.showActivityAndClearBackStack(LOGIN_ACTIVITY)
 }

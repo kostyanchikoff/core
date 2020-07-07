@@ -8,6 +8,7 @@ apply from: './security_dependensies.gradle'
 apply from: './test_dependensies.gradle'
 apply from: './view_dependensies.gradle'
 apply from: './apollo_dependensies.gradle'
+apply from: './nav_dependensies.gradle'
 
 
 ext {
@@ -17,7 +18,7 @@ ext {
     libraryName = "core"
     artifact = "core"
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.0-alpha-51"
+    libraryVersion = "1.0.0-alpha-52"
     developerId = "kostynchikoff"
     siteUrl = 'https://github.com/kostyanchikoff'
     gitUrl = 'https://github.com/kostyanchikoff/core'
