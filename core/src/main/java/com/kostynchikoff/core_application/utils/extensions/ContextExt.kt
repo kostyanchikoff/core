@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+
 
 fun Context?.toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
@@ -42,6 +44,10 @@ fun Context.startVibrator(milliseconds: Long) {
 }
 
 fun Context.toSp(px: Float) = px / resources.displayMetrics.scaledDensity
+
+fun Context.toPixel(dp: Float) = dp * resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT
+
+fun Context.tpDp(px: Float) = px / resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT
 
 /**
  * Показываем файл через стандартные средства устройства
