@@ -8,7 +8,10 @@ import java.text.NumberFormat
 /**
  * Формирование из строки в числовое значение с двумя нулями
  */
-fun formatWithZeroAmount(value: String, currency: String = CoreConstant.EMPTY): String {
+fun formatWithZeroAmount(value: String?, currency: String = CoreConstant.EMPTY): String {
+    if(value.isNullOrEmpty()){
+        return "0.00"
+    }
     val formatter: NumberFormat = DecimalFormat(PATTERN_FORMAT_AMOUNT_SPACE)
     return "${formatter.format(value.toDouble()).replace(",", " ")} $currency"
 }
