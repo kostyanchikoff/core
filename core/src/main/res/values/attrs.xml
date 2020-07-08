@@ -26,4 +26,11 @@
         <attr name="pathAuthActivity" />
     </declare-styleable>
 
+    <declare-styleable name="BlurLayout">
+        <attr name="blur_blurRadius" format="dimension"/>
+        <attr name="blur_downSampleFactor" format="float"/>
+        <attr name="blur_overlayColor" format="color"/>
+        <attr name="blur_cornerRadius" format="dimension"/>
+    </declare-styleable>
+
 </resources>
