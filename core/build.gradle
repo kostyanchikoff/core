@@ -18,7 +18,7 @@ ext {
     libraryName = "core"
     artifact = "core"
     libraryDescription = "core for android application"
-    libraryVersion = "1.0.0-alpha-52"
+    libraryVersion = "1.0.0-alpha-53"
     developerId = "kostynchikoff"
     siteUrl = 'https://github.com/kostyanchikoff'
     gitUrl = 'https://github.com/kostyanchikoff/core'
