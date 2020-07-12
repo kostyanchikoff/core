@@ -15,6 +15,7 @@ import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
 /**
  * Использовать если необходим context
  */
+@Deprecated("Использовать [CoreAndroidLaunchViewModel]")
 abstract class CoreAndroidViewModel(application: Application) : AndroidViewModel(application),
     EncryptedPrefDelegate by EncryptedPrefDelegateImpl() {
     /**

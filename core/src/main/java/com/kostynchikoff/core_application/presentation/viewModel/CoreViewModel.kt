@@ -12,6 +12,7 @@ import com.kostynchikoff.core_application.utils.delegates.EncryptedPrefDelegateI
 import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
 import org.koin.core.KoinComponent
 
+@Deprecated("Использовать [CoreLaunchViewModel]")
 abstract class CoreViewModel : ViewModel(), KoinComponent,
     EncryptedPrefDelegate by EncryptedPrefDelegateImpl() {
 

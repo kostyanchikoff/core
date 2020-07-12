@@ -1,0 +1,82 @@
+package com.kostynchikoff.core_application.presentation.viewModel
+
+import android.app.Application
+import android.os.Bundle
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import com.kostynchikoff.core_application.data.network.Status
+import com.kostynchikoff.core_application.presentation.model.UIValidation
+import com.kostynchikoff.core_application.utils.delegates.CoreCoroutine
+import com.kostynchikoff.core_application.utils.delegates.CoreCoroutineDelegate
+import com.kostynchikoff.core_application.utils.wrappers.EventWrapper
+
+abstract class CoreAndroidLaunchViewModel(application: Application, vararg useCases: CoreCoroutine) : AndroidViewModel(application),
+    CoreCoroutine by CoreCoroutineDelegate() {
+
+
+    private var listUseCase: Array<out CoreCoroutine> = arrayOf()
+
+
+    val errorLiveData: LiveData<EventWrapper<String>> =
+        MediatorLiveData<EventWrapper<String>>().apply {
+            useCases.forEach {
+                addSource(it.errorEventLiveData) { valueLiveDataUseCase ->
+                    value = valueLiveDataUseCase
+                }
+            }
+
+            addSource(errorEventLiveData) { valueLiveDataViewModel ->
+                value = valueLiveDataViewModel
+            }
+        }
+
+    val errorByTypeLiveData: LiveData<EventWrapper<UIValidation>> =
+        MediatorLiveData<EventWrapper<UIValidation>>().apply {
+            useCases.forEach {
+                addSource(it.errorEventByTypeLiveData) { valueLiveDataUseCase ->
+                    value = valueLiveDataUseCase
+                }
+            }
+
+            addSource(errorEventByTypeLiveData) { valueLiveDataViewModel ->
+                value = valueLiveDataViewModel
+            }
+        }
+
+    val statusLiveData: LiveData<Status> = MediatorLiveData<Status>().apply {
+        useCases.forEach {
+            addSource(it.statusEventLiveData) { valueLiveDataUseCase ->
+                value = valueLiveDataUseCase
+            }
+        }
+
+        addSource(statusEventLiveData) { valueLiveDataViewModel ->
+            value = valueLiveDataViewModel
+        }
+    }
+
+    val redirectFragment: LiveData<Pair<Int, Bundle?>> =
+        MediatorLiveData<Pair<Int, Bundle?>>().apply {
+            useCases.forEach {
+                addSource(it.redirectEventFragment) { valueLiveDataUseCase ->
+                    value = valueLiveDataUseCase
+                }
+            }
+
+            addSource(redirectEventFragment) { valueLiveDataViewModel ->
+                value = valueLiveDataViewModel
+            }
+        }
+
+    init {
+        this.listUseCase = useCases
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        listUseCase.forEach {
+            it.clearCoroutine()
+        }
+    }
+}
