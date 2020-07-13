@@ -99,8 +99,9 @@ class OAuthInterceptor : Interceptor, KoinComponent {
         return response
     }
 
-    private fun Request.Builder.addHeaders(token: String) =
+    private fun Request.Builder.addHeaders(token: String?) =
         this.apply {
-            header(AUTHORIZATION, token)
+            if (!token.isNullOrEmpty())
+                header(AUTHORIZATION, token)
         }
 }
