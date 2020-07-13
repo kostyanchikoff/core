@@ -77,9 +77,10 @@ fun createApolloOkHttpClient(): OkHttpClient {
  * Создание api сервисов для Retrofit
  */
 inline fun <reified T> createWebService(
-    okHttpClient: OkHttpClient
+    okHttpClient: OkHttpClient,
+    baseUrl : String = CoreVariables.BASE_URL
 ): T = Retrofit.Builder()
-    .baseUrl(CoreVariables.BASE_URL)
+    .baseUrl(baseUrl)
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create(createGson()))
     .build()
