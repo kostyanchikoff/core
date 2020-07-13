@@ -14,6 +14,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -103,9 +104,8 @@ fun AppCompatActivity.requestPermission(
 fun Activity.showActivityAndClearBackStack(activity: Activity?) {
     if (activity == null) throw Throwable("Укажите activity")
     val intent = Intent(this, activity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
     startActivity(intent)
-    this.finish()
+    ActivityCompat.finishAffinity(this)
 }
 
 /**
